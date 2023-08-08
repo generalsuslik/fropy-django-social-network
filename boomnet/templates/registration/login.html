@@ -10,10 +10,12 @@
             Please try again.
         </p>
     {% else %}
-        <p>
-            Please, use the following form to log-in.
-            If u don't have an account <a href="#">Sign up here</a>
-        </p>
+        <div>
+            <p>
+                Please, use the following form to log-in.
+                If u don't have an account <a href="{% url 'boomnet:sign_up' %}">Sign up here</a>
+            </p>
+        </div>
     {% endif %}
     <div class="login-form">
         <form action="{% url 'boomnet:login' %}" method="post">

@@ -1,0 +1,30 @@
+/* --------- Topic view classes --------- */
+
+.topic{
+    margin: 5px;
+}
+
+.main-topic-info{
+    margin: 5px
+}
+
+.topic-link{
+    display: flex;
+    margin: 5px;
+}
+
+.topic_main{
+    margin: 5px;
+    display: flex;
+}
+
+.about{
+    margin-left: 10px;
+    margin-top: 15px;
+}
+
+.topic-info{
+    margin-left: 10px;
+}
+
+

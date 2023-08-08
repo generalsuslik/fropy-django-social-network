@@ -1,13 +1,11 @@
-from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 
 from .models import Profile, Post, Comment, Topic
-from .forms import AddPostForm, LoginForm, UserSignupForm, UserEditForm, ProfileEditForm, AddCommentForm, NewTopicForm
+from .forms import AddPostForm, UserSignupForm, UserEditForm, ProfileEditForm, AddCommentForm, NewTopicForm
 
 
 def index(request):
@@ -132,52 +130,19 @@ def view_topic(request, slug):
     return render(request, 'boomnet/view_topic.html', context)
 
 
-def user_login(request):
-    if request.method != 'POST':
-        form = LoginForm()
-
-    else:
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            cleaned_data = form.cleaned_data
-            user = authenticate(request,
-                                username=cleaned_data['username'],
-                                password=cleaned_data['password'])
-
-            if user is None:
-                return HttpResponse('Invalid login')
-
-            else:
-                if user.is_active:
-                    login(request, user)
-                    return HttpResponse("Success")
-
-                else:
-                    return HttpResponse('Disabled account')
-
-    context = {'form': form}
-    return render(request, 'boomnet/login.html', context)
-
-
 def sign_up(request):
     if request.method != 'POST':
         user_form = UserSignupForm()
-        # profile_form = ProfileForm()
 
     else:
         user_form = UserSignupForm(request.POST)
-        # profile_form = ProfileForm(request.POST, request.FILES)
         if user_form.is_valid():
             new_user = user_form.save(commit=False)
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
 
-            # new_profile = profile_form.save(commit=False)
-            # new_profile.user = new_user
-            # new_profile.save()
             Profile.objects.create(user=new_user)
-            # login(request, new_user)
-            context = {'new_user': new_user,}# 'new_profile': new_profile}
+            context = {'new_user': new_user}
             return render(request, 'boomnet/sign_up_done.html', context)
 
     context = {'user_form': user_form}

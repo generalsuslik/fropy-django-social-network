@@ -17,7 +17,7 @@
                     <p class="info">{{ profile.info }}</p>
 
                     {% if profile.date_of_birth %}
-                        <p class="info-adds">Birth date: {{ profile.date_of_birth }}</p>
+                        <p class="info-adds">Birthdate: {{ profile.date_of_birth }}</p>
                     {% endif %}
                     <p class="info-adds">Joined Fropy: {{ profile.created_at }}</p>
                 </div>
@@ -31,6 +31,17 @@
     <div class="fropy">
         {% for post in posts %}
             <div class="post">
+                {% if post.topic %}
+                    <a href="{% url 'boomnet:view_topic' post.topic.slug %}" class="no-underline">
+                        <div class="topic-link">
+                            {% if post.topic.image %}
+                                <img class="avatar" src="{{ post.topic.image.url }}" alt="topic_im">
+                            {% endif %}
+                            <h3 class="nickname">{{ post.topic.title }}</h3>
+                        </div>
+                    </a>
+                {% endif %}
+
                 <div class="post-image">
                     {% if post.image %}
                         <img src="{{ post.image.url }}">

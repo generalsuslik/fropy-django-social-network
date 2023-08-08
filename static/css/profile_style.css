@@ -1,0 +1,35 @@
+/* --------- Profile classes --------- */
+
+.profile{
+    margin-left: 10px;
+}
+
+.profile1{
+    display: flex;
+}
+
+.avatar{
+    width: 50px;
+    border-radius: 20%;
+}
+
+.nickname{
+    margin-left: 10px;
+}
+
+.super-info{
+    margin: 10px;
+}
+
+.profile-info{
+    margin-left: 20px;
+}
+
+.info{
+    margin-left: 10px;
+}
+
+.info-adds{
+    font-size: 80%;
+    margin-left: 20px;
+}

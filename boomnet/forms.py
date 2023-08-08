@@ -12,11 +12,6 @@ class AddPostForm(forms.ModelForm):
         widgets = {'text': forms.Textarea(attrs={'cols': 80, 'rows': 5})}
 
 
-class LoginForm(forms.ModelForm):
-    nickname = forms.CharField(max_length=150)
-    password = forms.CharField(widget=forms.PasswordInput)
-
-
 class UserSignupForm(UserCreationForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repeat Password', widget=forms.PasswordInput)

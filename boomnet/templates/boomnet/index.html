@@ -3,36 +3,39 @@
 
 {% block content %}
 
-{#    <h1>Latest posts here:</h1>#}
-
     <hr>
 
     <div class="fropy">
         {% for post in posts %}
-            <a href="{% url 'boomnet:post_detail' post.id %}" class="no-underline">
             <div class="post">
                 {% if post.topic %}
-                    <a href="#">
+                    <a href="{% url 'boomnet:view_topic' post.topic.slug %}" class="no-underline">
                         <div class="topic-link">
-                            <h3>{{ post.topic.title }}</h3>
+                            {% if post.topic.image %}
+                                <img class="avatar" src="{{ post.topic.image.url }}" alt="topic_im">
+                            {% endif %}
+                            <h3 class="nickname">{{ post.topic.title }}</h3>
                         </div>
                     </a>
                 {% endif %}
-                <div class="post-image">
-                    {% if post.image %}
-                        <img src="{{ post.image.url }}">
-                    {% endif %}
-                </div>
-                <div class="post-text">
-                    {{ post.text|linebreaks }}
-                </div>
-                <a href="{% url 'boomnet:view_profile' post.profile.id %}">
-                    <p class="adds">By: {{ post.profile.username }}</p>
+                <a href="{% url 'boomnet:post_detail' post.id %}" class="no-underline">
+                    <div>
+                        <div class="post-image">
+                            {% if post.image %}
+                                <img src="{{ post.image.url }}" alt="img">
+                            {% endif %}
+                        </div>
+                        <div class="post-text">
+                            {{ post.text|linebreaks }}
+                        </div>
+                        <a href="{% url 'boomnet:view_profile' post.profile.id %}">
+                            <p class="adds">By: {{ post.profile.username }}</p>
+                        </a>
+                        <p class="adds">Created ad: {{ post.created_at }}</p>
+                        <a class="adds" href="{% url 'boomnet:post_detail' post.id %}">View all comments</a>
+                    </div>
                 </a>
-                <p class="adds">Created ad: {{ post.created_at }}</p>
-                <a class="adds" href="{% url 'boomnet:post_detail' post.id %}">View all comments</a>
             </div>
-            </a>
         {% endfor %}
     </div>
 

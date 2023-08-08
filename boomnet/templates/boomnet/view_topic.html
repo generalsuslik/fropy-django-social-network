@@ -5,18 +5,22 @@
 
     <div class="topic">
         <div class="main-topic-info">
-            <div class="topic-main">
+            <div class="topic_main" id="topic_main">
                 {% if topic.image %}
                     <img class="avatar" src="{{ topic.image.url }}" alt="topic_image">
                 {% endif %}
-                <h3 class="topic-title">{{ topic.title }}</h3>
+                <h3 class="nickname">{{ topic.title }}</h3>
             </div>
-            {% if topic.description %}
-                <div class="topic-info">
-                    <p class="info">{{ topic.description }}</p>
-                </div>
-            {% endif %}
-            <p class="info-adds">Created at: {{ topic.created_at }}</p>
+
+            <div class="about">
+                <h4>About {{ topic.title }}:</h4>
+                {% if topic.description %}
+                    <div class="topic-info">
+                        <p class="info">{{ topic.description }}</p>
+                    </div>
+                {% endif %}
+                <p class="info-adds">Created at: {{ topic.created_at }}</p>
+            </div>
         </div>
         <br>
 
@@ -24,19 +28,21 @@
             {% for post in posts %}
 
                 <div class="post">
-                    <div class="post-image">
-                    {% if post.image %}
-                        <img src="{{ post.image.url }}">
-                    {% endif %}
-                </div>
-                <div class="post-text">
-                    {{ post.text|linebreaks }}
-                </div>
-                <a href="{% url 'boomnet:view_profile' post.profile.id %}">
-                    <p class="adds">By: {{ post.profile.username }}</p>
-                </a>
-                <p class="adds">Created ad: {{ post.created_at }}</p>
-                <a class="adds" href="{% url 'boomnet:post_detail' post.id %}">View all comments</a>
+                    <a href="{% url 'boomnet:post_detail' post.id %}" class="no-underline">
+                        <div class="post-image">
+                            {% if post.image %}
+                                <img src="{{ post.image.url }}" alt="post_image">
+                            {% endif %}
+                        </div>
+                        <div class="post-text">
+                            {{ post.text|linebreaks }}
+                        </div>
+                        <a href="{% url 'boomnet:view_profile' post.profile.id %}">
+                            <p class="adds">By: {{ post.profile.username }}</p>
+                        </a>
+                        <p class="adds">Created ad: {{ post.created_at }}</p>
+                        <a class="adds" href="{% url 'boomnet:post_detail' post.id %}">View all comments</a>
+                    </a>
                 </div>
 
             {% empty %}
