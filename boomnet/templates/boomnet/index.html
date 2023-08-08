@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{#    <h1>Latest posts here:</h1>#}
+
+    <hr>
+
+    <div class="fropy">
+        {% for post in posts %}
+            <a href="{% url 'boomnet:post_detail' post.id %}" class="no-underline">
+            <div class="post">
+                {% if post.topic %}
+                    <a href="#">
+                        <div class="topic-link">
+                            <h3>{{ post.topic.title }}</h3>
+                        </div>
+                    </a>
+                {% endif %}
+                <div class="post-image">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}">
+                    {% endif %}
+                </div>
+                <div class="post-text">
+                    {{ post.text|linebreaks }}
+                </div>
+                <a href="{% url 'boomnet:view_profile' post.profile.id %}">
+                    <p class="adds">By: {{ post.profile.username }}</p>
+                </a>
+                <p class="adds">Created ad: {{ post.created_at }}</p>
+                <a class="adds" href="{% url 'boomnet:post_detail' post.id %}">View all comments</a>
+            </div>
+            </a>
+        {% endfor %}
+    </div>
+
+{% endblock %}

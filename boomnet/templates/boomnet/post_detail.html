@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <div class="fropy">
+        <div class="post">
+            <div class="post-image">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}">
+                {% endif %}
+            </div>
+            <div class="post-text">{{ post.text|linebreaks }}</div>
+            <a href="{% url 'boomnet:view_profile' post.profile.id %}"><p class="adds">By: {{ post.profile.username }}</p></a>
+            <p class="adds">Created at: {{ post.created_at }}</p>
+        </div>
+    </div>
+
+    <div class="comment-block">
+        <div class="comment-form">
+            <div class="form">
+                <form method="post" enctype="multipart/form-data">
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                    <p><input type="submit" value="Submit"></p>
+                </form>
+            </div>
+        </div>
+
+        {% for comment in comments %}
+            <div class="comment">
+                <div class="author-link">
+                    <a href="{% url 'boomnet:view_profile' comment.author.id %}">
+                        <div class="comment-author">
+                            <img class="avatar" src="{{ comment.author.profile.avatar.url }}" alt="av">
+                            {{ comment.author.username }}
+                        </div>
+                    </a>
+                </div>
+
+                <div class="comment-inner">
+                    <div>
+                        {% if comment.image %}
+                            <img class="comment-image" src="{{ comment.image.url }}">
+                        {% endif %}
+                    </div>
+                    <div class="comment-text">
+                        {{ comment.text|linebreaks }}
+                    </div>
+                    <p class="adds">{{ comment.created_at }}</p>
+                </div>
+
+            </div>
+        {% empty %}
+            <p>No comments yet</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}

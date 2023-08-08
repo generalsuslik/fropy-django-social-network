@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <p style="margin-left: 30px">
+        U have logged out.
+        <a href="{% url 'boomnet:login' %}">Log in again</a> or <a href="{% url 'boomnet:sign_up' %}">Sign up</a>
+    </p>
+
+{% endblock %}
+

@@ -1,0 +1,136 @@
+/* --------- Main page classes --------- */
+.fropy{
+    margin-left: 20%;
+    margin-right: 35%;
+    /*background-color: black;*/
+}
+
+.post{
+    border: solid 1px;
+    margin-bottom: 30px;
+    border-radius: 7px;
+    /*background-color: #061f1f;*/
+}
+
+.post-image{
+    text-align: center;
+    margin: 10px;
+
+}
+
+.post-text{
+    margin: 7px;
+    /*color: white;*/
+}
+
+.adds{
+    font-size: 10px;
+    /*color: white;*/
+    margin-left: 10px;
+}
+
+.no-underline{
+    text-decoration: none;
+    color: black;
+}
+
+
+/* --------- Profile classes --------- */
+
+.profile{
+    margin-left: 10px;
+}
+
+.profile1{
+    display: flex;
+}
+
+.avatar{
+    width: 50px;
+    border-radius: 20%;
+}
+
+.nickname{
+    margin-left: 10px;
+}
+
+.super-info{
+    margin: 10px;
+}
+
+.profile-info{
+    margin-left: 20px;
+}
+
+.info{
+    margin-left: 10px;
+}
+
+.info-adds{
+    font-size: 80%;
+    margin-left: 20px;
+}
+
+
+/* --------- Post view classes --------- */
+
+.comment-block{
+    margin-left: 20%;
+    margin-right: 35%;
+}
+
+.comment-form{
+    display: inline-block;
+    border: solid 1px;
+    border-radius: 7px;
+    margin-bottom: 10px;
+}
+
+.form{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.comment{
+    border: solid 1px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.author-link{
+    margin-right: 300px;
+}
+
+.comment-author{
+    margin: 5px;
+    display: inline-block;
+}
+
+.comment-inner{
+    margin-top: 5px;
+    margin-left: 20px;
+}
+
+.comment-image{
+    width: 70%;
+}
+
+/* --------- Topic view classes --------- */
+
+.topic{
+    margin-left: 10px;
+}
+
+.main-topic-info{
+    margin: 10px
+}
+
+.topic-main{
+    display: inline-block;
+    margin-left: 100px;
+}
+
+img{
+    width: 85%;
+}

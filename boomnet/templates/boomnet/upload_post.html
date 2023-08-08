@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h3>Create new post as here:</h3>
+    <br>
+    <div class="container">
+        <form method="post" enctype="multipart/form-data">
+            {{ post_form.as_p }}
+            <p><input type="submit" value="Upload"></p>
+            {% csrf_token %}
+        </form>
+    </div>
+
+{% endblock %}
+

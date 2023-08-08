@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <h3>Search results for {{ query }}:</h3>
+    <div class="search_result" style="margin-right: 80%">
+        <dl>
+            {% for user in users %}
+                <dd style="margin-left: 50px">
+                    <a  href="{% url 'boomnet:view_profile' user.profile.id %}">
+                        <div>
+                            <img class="avatar" src="{{ user.profile.avatar.url }}" alt="photo">
+                            {{ user.username }}
+                        </div>
+                    </a>
+                </dd>
+            {% empty %}
+                <dd style="margin-left: 50px">No results found</dd>
+            {% endfor %}
+        </dl>
+    </div>
+
+
+{% endblock %}

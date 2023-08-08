@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <div class="profile">
+        <div class="profile1">
+            {% if profile.avatar %}
+                    <img class="avatar" src="{{ profile.avatar.url }}" alt="Avatar">
+            {% endif %}
+            <h3 class="nickname">{{ user.username }}</h3>
+        </div>
+        {% if profile.info %}
+            <div class="super-info">
+                <h4>Info:</h4>
+                <div class="profile-info">
+                    <p class="info">{{ profile.info }}</p>
+
+                    {% if profile.date_of_birth %}
+                        <p class="info-adds">Birth date: {{ profile.date_of_birth }}</p>
+                    {% endif %}
+                    <p class="info-adds">Joined Fropy: {{ profile.created_at }}</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <br>
+    <h3>{{ user.username }}'s posts:</h3>
+    <hr>
+    <div class="fropy">
+        {% for post in posts %}
+            <div class="post">
+                <div class="post-image">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}">
+                    {% endif %}
+                </div>
+                <div class="post-text">
+                    {{ post.text|linebreaks }}
+                </div>
+                <a href="{% url 'boomnet:view_profile' post.profile.id %}">
+                    <p class="adds">By: {{ post.profile.username }}</p>
+                </a>
+                <p class="adds">Created ad: {{ post.created_at }}</p>
+                <a class="adds" href="{% url 'boomnet:post_detail' post.id %}">View all comments</a>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
