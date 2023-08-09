@@ -8,9 +8,12 @@
     margin: 5px
 }
 
+.join{
+    margin-left: 10px;
+}
+
 .topic-link{
     display: flex;
-    margin: 5px;
 }
 
 .topic_main{

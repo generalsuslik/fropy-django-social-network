@@ -6,15 +6,17 @@
     <div class="fropy">
         <div class="post">
             {% if post.topic %}
-                <a href="{% url 'boomnet:view_topic' post.topic.slug %}" class="no-underline">
-                    <div class="topic-link">
-                        {% if post.topic.image %}
-                            <img class="avatar" src="{{ post.topic.image.url }}" alt="topic_im">
-                        {% endif %}
-                        <h3 class="nickname">{{ post.topic.title }}</h3>
+                    <div class="author-link">
+                        <a href="{% url 'boomnet:view_topic' post.topic.slug %}" class="no-underline">
+                            <div class="comment-author">
+                                {% if post.topic.image %}
+                                    <img class="avatar" src="{{ post.topic.image.url }}" alt="topic_im">
+                                {% endif %}
+                                {{ post.topic.title }}
+                            </div>
+                        </a>
                     </div>
-                </a>
-            {% endif %}
+                {% endif %}
             <div class="post-image">
                 {% if post.image %}
                     <img src="{{ post.image.url }}">

@@ -1,9 +1,18 @@
-const menuButtons = document.querySelectorAll('.menu-button');
+const optionsButton = document.querySelector('.options-button');
+const optionsMenu = document.querySelector('.options-menu');
 
-menuButtons.forEach((button) => {
-  const menuOptions = button.nextElementSibling;
+optionsButton.addEventListener('click', function() {
+  optionsMenu.classList.toggle('show');
+});
 
-  button.addEventListener('click', () => {
-    menuOptions.style.display = menuOptions.style.display === 'none' ? 'block' : 'none';
-  });
+window.addEventListener('click', function(event) {
+  if (!event.target.matches('.options-button')) {
+    const optionsMenus = document.querySelectorAll('.options-menu');
+    for (let i = 0; i < optionsMenus.length; i++) {
+      const optionsMenu = optionsMenus[i];
+      if (optionsMenu.classList.contains('show')) {
+        optionsMenu.classList.remove('show');
+      }
+    }
+  }
 });

@@ -16,5 +16,9 @@ urlpatterns = [
     path('post/<int:post_id>/', views.post_detail, name='post_detail'),
     path('topic/create/', views.new_topic, name='new_topic'),
     path('topic/<slug:slug>/', views.view_topic, name='view_topic'),
+    path('topic/<slug:slug>/subscribe/', views.subscribe, name='subscribe'),
+    path('topic/<slug:slug>/unsubscribe/', views.unsubscribe, name='unsubscribe'),
+    path('bookmarks/', views.view_bookmarks, name='view_bookmarks'),
+    path('bookmarks/add/post/<int:post_id>', views.add_post_to_bookmarks, name='add_post_to_bookmarks'),
 ]
 

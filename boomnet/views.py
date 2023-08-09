@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 
-from .models import Profile, Post, Comment, Topic
+from .models import Profile, Post, Comment, Topic, Subscription, UserBookmarking
 from .forms import AddPostForm, UserSignupForm, UserEditForm, ProfileEditForm, AddCommentForm, NewTopicForm
 
 
@@ -122,12 +122,56 @@ def new_topic(request):
     return render(request, 'boomnet/new_topic.html', context)
 
 
+@login_required
 def view_topic(request, slug):
     topic = Topic.objects.get(slug=slug)
     posts = Post.objects.filter(topic=topic)
+    subscribers = len(Subscription.objects.filter(topic=topic))
+    subscription_exists = True if Subscription.objects.filter(user=request.user, topic=topic) else False
+    is_author = request.user == topic.author
 
-    context = {'topic': topic, 'posts': posts}
+    context = {'topic': topic,
+               'posts': posts,
+               'subscribers': subscribers,
+               'subscription_exists': subscription_exists,
+               'is_author': is_author,
+               }
     return render(request, 'boomnet/view_topic.html', context)
+
+
+@login_required
+def view_bookmarks(request):
+    bookmarks = UserBookmarking.objects.filter(user=request.user)
+
+    context = {'bookmarks': bookmarks}
+    return render(request, 'boomnet/view_bookmarks.html', context)
+
+
+@login_required
+def add_post_to_bookmarks(request, post_id):
+    post = Post.objects.get(id=post_id)
+    new_bookmark = UserBookmarking(user=request.user, post=post)
+    new_bookmark.save()
+
+    return redirect('boomnet:index')
+
+
+@login_required
+def subscribe(request, slug):
+    topic = Topic.objects.get(slug=slug)
+    subscription = Subscription(user=request.user, topic=topic)
+    subscription.save()
+
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def unsubscribe(request, slug):
+    topic = Topic.objects.get(slug=slug)
+    subscription = Subscription.objects.get(user=request.user, topic=topic)
+    subscription.delete()
+
+    return redirect('boomnet:index')
 
 
 def sign_up(request):

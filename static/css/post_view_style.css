@@ -31,6 +31,7 @@
 .comment-author{
     margin: 5px;
     display: inline-block;
+    /*display: flex;*/
 }
 
 .comment-inner{

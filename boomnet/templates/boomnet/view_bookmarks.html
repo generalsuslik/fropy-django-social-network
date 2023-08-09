@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <div class="title">
+        <h3>Ur bookmarks</h3>
+    </div>
+    <hr>
+    <br>
+
+    <div class="fropy">
+        {% for bookmark in bookmarks %}
+            <div class="post">
+                {% if bookmark.post.topic %}
+                    <a href="{% url 'boomnet:view_topic' bookmark.post.topic.slug %}" class="no-underline">
+                        <div class="topic-link">
+                            {% if bookmark.post.topic.image %}
+                                <img class="avatar" src="{{ bookmark.post.topic.image.url }}" alt="topic_im">
+                            {% endif %}
+                            <h3 class="nickname">{{ bookmark.post.topic.title }}</h3>
+                        </div>
+                    </a>
+
+                    <a href="{% url 'boomnet:post_detail' bookmark.post.id %}" class="no-underline">
+                    <div>
+                        <div class="post-image">
+                            {% if bookmark.post.image %}
+                                <img src="{{ bookmark.post.image.url }}" alt="img">
+                            {% endif %}
+                        </div>
+                        <div class="post-text">
+                            {{ bookmark.post.text|linebreaks }}
+                        </div>
+                        <a href="{% url 'boomnet:view_profile' bookmark.post.profile.id %}">
+                            <p class="adds">By: {{ bookmark.post.profile.username }}</p>
+                        </a>
+                        <p class="adds">Created ad: {{ bookmark.post.created_at }}</p>
+                        <a class="adds" href="{% url 'boomnet:post_detail' bookmark.post.id %}">View all comments</a>
+                    </div>
+                </a>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>U haven't added any posts to ur bookmarks yet.</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+

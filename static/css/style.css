@@ -10,6 +10,7 @@
     margin-bottom: 30px;
     border-radius: 7px;
     /*background-color: #061f1f;*/
+    position: relative;
 }
 
 .post-image{

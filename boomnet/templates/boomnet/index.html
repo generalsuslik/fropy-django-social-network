@@ -9,14 +9,16 @@
         {% for post in posts %}
             <div class="post">
                 {% if post.topic %}
-                    <a href="{% url 'boomnet:view_topic' post.topic.slug %}" class="no-underline">
-                        <div class="topic-link">
-                            {% if post.topic.image %}
-                                <img class="avatar" src="{{ post.topic.image.url }}" alt="topic_im">
-                            {% endif %}
-                            <h3 class="nickname">{{ post.topic.title }}</h3>
-                        </div>
-                    </a>
+                    <div class="author-link">
+                        <a href="{% url 'boomnet:view_topic' post.topic.slug %}" class="no-underline">
+                            <div class="comment-author">
+                                {% if post.topic.image %}
+                                    <img class="avatar" src="{{ post.topic.image.url }}" alt="topic_im">
+                                {% endif %}
+                                {{ post.topic.title }}
+                            </div>
+                        </a>
+                    </div>
                 {% endif %}
                 <a href="{% url 'boomnet:post_detail' post.id %}" class="no-underline">
                     <div>
@@ -33,6 +35,7 @@
                         </a>
                         <p class="adds">Created ad: {{ post.created_at }}</p>
                         <a class="adds" href="{% url 'boomnet:post_detail' post.id %}">View all comments</a>
+                        <a class="adds" href="{% url 'boomnet:add_post_to_bookmarks' post.id %}">Add to bookmarks</a>
                     </div>
                 </a>
             </div>

@@ -39,6 +39,7 @@
             </a>
             <ul class="dropdown-menu" style="margin-right: 10px">
               <li><a class="dropdown-item" href="{% url 'boomnet:view_profile' request.user.profile.id %}">{{ request.user.username }}</a></li>
+              <li><a class="dropdown-item" href="{% url 'boomnet:view_bookmarks' %}">Bookmarks</a></li>
               <li><a class="dropdown-item" href="{% url 'boomnet:edit_profile'%}">Edit profile</a></li>
               <li><a class="dropdown-item" href="{% url 'boomnet:password_change' %}">Change password</a></li>
             </ul>
