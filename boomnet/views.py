@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import Http404, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.utils.text import slugify
@@ -11,16 +12,26 @@ from .forms import AddPostForm, UserSignupForm, UserEditForm, ProfileEditForm, A
 def index(request):
     posts = Post.objects.all().order_by('-created_at')
     topics = Topic.objects.all().order_by('-created_at')
+    if request.user.is_authenticated:
+        bookmarks = UserBookmarking.objects.filter(user=request.user)
+        bookmarked_posts = []
+        for bookmark in bookmarks:
+            post = Post.objects.get(id=bookmark.post.id)
+            bookmarked_posts.append(post)
 
-    context = {'posts': posts, 'topics': topics}
+        context = {'posts': posts, 'topics': topics, 'bookmarked_posts': bookmarked_posts}
+
+    else:
+        context = {'posts': posts, 'topics': topics}
+
     return render(request, 'boomnet/index.html', context)
 
 
 @login_required
-def view_profile(request, profile_id):
-    profile = Profile.objects.get(pk=profile_id)
+def view_profile(request, slug):
+    profile = Profile.objects.get(slug=slug)
     user = profile.user
-    posts = Post.objects.filter(profile=user).order_by('-created_at')
+    posts = Post.objects.filter(user=user).order_by('-created_at')
     context = {"profile": profile, "posts": posts, 'user': user}
     return render(request, 'boomnet/view_profile.html', context)
 
@@ -44,7 +55,7 @@ def edit_profile(request):
             user_edit_form.save()
             profile_edit_form.save()
             messages.success(request, 'Profile updated successfully')
-            return redirect('boomnet:view_profile', request.user.profile.id)
+            return redirect('boomnet:view_profile', request.user.profile.slug)
 
         else:
             messages.error(request, 'Error during updating ur profile')
@@ -62,9 +73,9 @@ def upload_post(request):
         post_form = AddPostForm(request.POST, request.FILES)
         if post_form.is_valid():
             new_post = post_form.save(commit=False)
-            new_post.profile = request.user
+            new_post.user = request.user
             new_post.save()
-            messages.success(request, 'New post created successfully')
+            new_post.slug = slugify(new_post.title)
 
             return redirect('boomnet:index')
 
@@ -73,31 +84,32 @@ def upload_post(request):
 
 
 @login_required
-def search_users(request):
-    query = request.GET.get('query')
+def search_users_and_topics(request):
+    query = request.GET.get('query').lower()
     users = User.objects.filter(username__startswith=query)
+    topics = Topic.objects.filter(title__startswith=query)
 
-    context = {'users': users, 'query': query}
-    return render(request, 'boomnet/search_users.html', context)
+    context = {'topics': topics, 'users': users, 'query': query}
+    return render(request, 'boomnet/search_users_and_topics.html', context)
 
 
 @login_required
-def post_detail(request, post_id):
-    post = Post.objects.get(pk=post_id)
-    comments = Comment.objects.filter(post_id=post_id).order_by('-created_at')
+def post_detail(request, slug):
+    post = Post.objects.get(slug=slug)
+    comments = Comment.objects.filter(post__slug=slug).order_by('-created_at')
     if request.method != 'POST':
         form = AddCommentForm()
 
     else:
         form = AddCommentForm(request.POST, request.FILES)
-        post = Post.objects.get(pk=post_id)
+        post = Post.objects.get(slug=slug)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.author = request.user
             comment.post = post
             comment.save()
 
-        return redirect('boomnet:post_detail', post_id)
+        return redirect('boomnet:post_detail', slug)
 
     context = {'form': form, 'post': post, 'comments': comments}
     return render(request, 'boomnet/post_detail.html', context)
@@ -123,6 +135,17 @@ def new_topic(request):
 
 
 @login_required
+def delete_topic(request, slug):
+    topic = Topic.objects.get(slug=slug)
+    if request.user != topic.author:
+        return Http404
+
+    else:
+        topic.delete()
+        return redirect('boomnet:index')
+
+
+@login_required
 def view_topic(request, slug):
     topic = Topic.objects.get(slug=slug)
     posts = Post.objects.filter(topic=topic)
@@ -140,20 +163,46 @@ def view_topic(request, slug):
 
 
 @login_required
-def view_bookmarks(request):
-    bookmarks = UserBookmarking.objects.filter(user=request.user)
+def vote_post(request, slug):
+    if request.method != "POST":
+        return
 
-    context = {'bookmarks': bookmarks}
+    vote_type = request.POST.get('vote_type')
+    post = Post.objects.get(slug=slug)
+
+    if vote_type == '1':
+        post.total_votes += 1
+    elif vote_type == '-1':
+        post.total_votes -= 1
+    post.save()
+
+    return JsonResponse({'likes': post.total_votes})
+
+
+@login_required
+def view_bookmarks(request):
+    bookmarks = UserBookmarking.objects.filter(user=request.user).order_by('-created_at')
+
+    context = {'bookmarks': bookmarks,}
     return render(request, 'boomnet/view_bookmarks.html', context)
 
 
 @login_required
-def add_post_to_bookmarks(request, post_id):
-    post = Post.objects.get(id=post_id)
+def add_post_to_bookmarks(request, slug):
+    post = Post.objects.get(slug=slug)
     new_bookmark = UserBookmarking(user=request.user, post=post)
     new_bookmark.save()
 
-    return redirect('boomnet:index')
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def remove_post_from_bookmarks(request, post_id):
+    post = Post.objects.get(id=post_id)
+    bookmark = UserBookmarking.objects.get(post=post, user=request.user)
+    bookmark.delete()
+
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
@@ -171,7 +220,16 @@ def unsubscribe(request, slug):
     subscription = Subscription.objects.get(user=request.user, topic=topic)
     subscription.delete()
 
-    return redirect('boomnet:index')
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def delete_comment(request, slug, comment_id):
+    post = Post.objects.get(slug=slug)
+    comment = Comment.objects.get(pk=comment_id, post=post)
+
+    comment.delete()
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 def sign_up(request):
@@ -185,7 +243,10 @@ def sign_up(request):
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
 
-            Profile.objects.create(user=new_user)
+            # Profile.objects.create(user=new_user)
+            new_profile = Profile(user=new_user)
+            new_profile.slug = slugify(new_user.username)
+
             context = {'new_user': new_user}
             return render(request, 'boomnet/sign_up_done.html', context)
 

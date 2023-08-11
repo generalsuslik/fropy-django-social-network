@@ -8,8 +8,8 @@ from .models import Post, Profile, Comment, Topic
 class AddPostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['topic', 'image', 'text']
-        widgets = {'text': forms.Textarea(attrs={'cols': 80, 'rows': 5})}
+        fields = ['topic', 'title', 'image', 'text']
+        widgets = {'text': forms.Textarea(attrs={'cols': 80, 'rows': 10})}
 
 
 class UserSignupForm(UserCreationForm):
@@ -38,14 +38,14 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['avatar', 'date_of_birth', 'info']
-        widgets = {'text': forms.Textarea(attrs={'cols': 80, 'rows': 2})}
+        widgets = {'info': forms.Textarea(attrs={'cols': 80, 'rows': 10})}
 
 
 class AddCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['image', 'text']
-        widgets = {'text': forms.Textarea(attrs={'cols': 75, 'rows': 4})}
+        widgets = {'text': forms.Textarea(attrs={'cols': 70, 'rows': 4})}
 
 
 class NewTopicForm(forms.ModelForm):

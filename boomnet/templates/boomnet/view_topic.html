@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block title %}{{ topic.title }}{% endblock %}
+
 
 {% block content %}
 
@@ -10,24 +12,26 @@
                     <img class="avatar" src="{{ topic.image.url }}" alt="topic_image">
                 {% endif %}
                 <h3 class="nickname">{{ topic.title }}</h3>
-                {% if is_author %}
-                    <form action="#" method="post">
-                        {% csrf_token %}
-                        <button type="submit">Delete {{ topic.title }}</button>
-                    </form>
-                {% else %}
-                    {% if subscription_exists %}
-                      <form action="{% url 'boomnet:unsubscribe' topic.slug %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit">Leave</button>
-                      </form>
+                <div class="button">
+                    {% if is_author %}
+                        <form action="{% url 'boomnet:delete_topic' topic.slug %}" method="post">
+                            {% csrf_token %}
+                            <button class="topic-button" type="submit">Delete {{ topic.title }}</button>
+                        </form>
                     {% else %}
-                      <form action="{% url 'boomnet:subscribe' topic.slug %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit">Join</button>
-                      </form>
+                        {% if subscription_exists %}
+                          <form action="{% url 'boomnet:unsubscribe' topic.slug %}" method="post">
+                            {% csrf_token %}
+                            <button class="topic-button" type="submit">Leave</button>
+                          </form>
+                        {% else %}
+                          <form action="{% url 'boomnet:subscribe' topic.slug %}" method="post">
+                            {% csrf_token %}
+                            <button class="topic-button" type="submit">Join</button>
+                          </form>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
+                </div>
             </div>
 
             <div class="about">
@@ -37,7 +41,7 @@
                         <p class="info">{{ topic.description }}</p>
                     </div>
                 {% endif %}
-                <p class="info-adds">Author: <a href="{% url 'boomnet:view_profile' topic.author.id %}">{{ topic.author.username }}</a></p>
+                <p class="info-adds">Author: <a href="{% url 'boomnet:view_profile' topic.author.profile.slug %}">{{ topic.author.username }}</a></p>
                 <p class="info-adds">Created at: {{ topic.created_at }}</p>
                 <p>Subscribers: {{ subscribers }}</p>
             </div>
@@ -57,7 +61,7 @@
                         <div class="post-text">
                             {{ post.text|linebreaks }}
                         </div>
-                        <a href="{% url 'boomnet:view_profile' post.profile.id %}">
+                        <a href="{% url 'boomnet:view_profile' post.user.profile.slug %}">
                             <p class="adds">By: {{ post.profile.username }}</p>
                         </a>
                         <p class="adds">Created ad: {{ post.created_at }}</p>

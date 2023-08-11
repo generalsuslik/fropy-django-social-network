@@ -13,6 +13,10 @@
     position: relative;
 }
 
+.post-data{
+    /*margin-left: 20px;*/
+}
+
 .post-image{
     text-align: center;
     margin: 10px;
@@ -20,7 +24,7 @@
 }
 
 .post-text{
-    margin: 7px;
+    margin-left: 60px;
     /*color: white;*/
 }
 
@@ -28,6 +32,10 @@
     font-size: 10px;
     /*color: white;*/
     margin-left: 10px;
+}
+
+.shapka{
+    display: inline-block;
 }
 
 .no-underline{

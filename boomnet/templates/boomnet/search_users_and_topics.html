@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Fropy | Search{% endblock %}
+
+{% block content %}
+
+    <h3>Search results for {{ query }}:</h3>
+    <div class="search_result" style="margin-right: 80%">
+        <dl>
+            {% for topic in topics %}
+                <dd style="margin-left: 50px">
+                    <a href="{% url 'boomnet:view_topic' topic.slug %}">
+                        <div class="no-underline">
+                            <img class="avatar" src="{{ topic.image.url }}" alt="topic_av">
+                            {{ topic.title }}
+                        </div>
+                    </a>
+                </dd>
+            {% endfor %}
+        </dl>
+        <br>
+        <dl>
+            {% for user in users %}
+                <dd style="margin-left: 50px">
+                    <a href="{% url 'boomnet:view_profile' user.profile.id %}">
+                        <div>
+                            <img class="avatar" src="{{ user.profile.avatar.url }}" alt="photo">
+                            {{ user.username }}
+                        </div>
+                    </a>
+                </dd>
+            {% endfor %}
+        </dl>
+    </div>
+
+
+{% endblock %}

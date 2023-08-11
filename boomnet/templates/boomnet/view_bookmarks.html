@@ -13,16 +13,18 @@
         {% for bookmark in bookmarks %}
             <div class="post">
                 {% if bookmark.post.topic %}
-                    <a href="{% url 'boomnet:view_topic' bookmark.post.topic.slug %}" class="no-underline">
-                        <div class="topic-link">
-                            {% if bookmark.post.topic.image %}
-                                <img class="avatar" src="{{ bookmark.post.topic.image.url }}" alt="topic_im">
-                            {% endif %}
-                            <h3 class="nickname">{{ bookmark.post.topic.title }}</h3>
-                        </div>
-                    </a>
-
-                    <a href="{% url 'boomnet:post_detail' bookmark.post.id %}" class="no-underline">
+                    <div class="author-link">
+                        <a href="{% url 'boomnet:view_topic' bookmark.post.topic.slug %}" class="no-underline">
+                            <div class="comment-author">
+                                {% if bookmark.post.topic.image %}
+                                    <img class="avatar" src="{{ bookmark.post.topic.image.url }}" alt="topic_img">
+                                {% endif %}
+                                {{ bookmark.post.topic.title }}
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+                <a href="{% url 'boomnet:post_detail' bookmark.post.slug %}" class="no-underline">
                     <div>
                         <div class="post-image">
                             {% if bookmark.post.image %}
@@ -32,17 +34,17 @@
                         <div class="post-text">
                             {{ bookmark.post.text|linebreaks }}
                         </div>
-                        <a href="{% url 'boomnet:view_profile' bookmark.post.profile.id %}">
+                        <a href="{% url 'boomnet:view_profile' bookmark.post.user.profile.slug %}">
                             <p class="adds">By: {{ bookmark.post.profile.username }}</p>
                         </a>
                         <p class="adds">Created ad: {{ bookmark.post.created_at }}</p>
-                        <a class="adds" href="{% url 'boomnet:post_detail' bookmark.post.id %}">View all comments</a>
+                        <a class="adds" href="{% url 'boomnet:post_detail' bookmark.post.slug %}">View all comments</a>
+                        <a class="adds" href="{% url 'boomnet:remove_post_from_bookmarks' bookmark.post.slug %}">Remove from bookmarks</a>
                     </div>
                 </a>
-                {% endif %}
             </div>
         {% empty %}
-            <p>U haven't added any posts to ur bookmarks yet.</p>
+            <p>U haven't added any posts yet.</p>
         {% endfor %}
     </div>
 

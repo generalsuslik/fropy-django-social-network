@@ -23,6 +23,7 @@ ALLOWED_HOSTS = ['fropy.com', '127.0.0.1', 'localhost']
 INSTALLED_APPS = [
     # fropy apps
     'boomnet.apps.BoomnetConfig',
+    'chat.apps.ChatConfig',
 
     'channels',
 
@@ -68,10 +69,7 @@ ASGI_APPLICATION = 'fropy.asgi.application'
 
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)]
-        }
+        'BACKEND': "channels.layers.InMemoryChannelLayer",
     }
 }
 
