@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'fropy_db',
         'USER': 'postgres',
-        'PASSWORD': 'Amatory_AL3108',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '5432',
 
