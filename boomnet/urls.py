@@ -30,5 +30,8 @@ urlpatterns = [
     path('bookmarks/remove/post/<slug:slug>/', views.remove_post_from_bookmarks, name='remove_post_from_bookmarks'),
 
     path('search_users/', views.search_users_and_topics, name='search_users_and_topics'),
+
+    path('profile/<slug:slug>/follow/', views.follow, name='follow'),
+    path('profile/<slug:slug>/unfollow/', views.unfollow, name='unfollow'),
 ]
 

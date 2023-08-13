@@ -1,17 +1,24 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import Http404, JsonResponse
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 
-from .models import Profile, Post, Comment, Topic, Subscription, UserBookmarking
+from .models import Profile, Post, Comment, Topic, Subscription, UserBookmarking, Following
 from .forms import AddPostForm, UserSignupForm, UserEditForm, ProfileEditForm, AddCommentForm, NewTopicForm
+
+from . import tools
 
 
 def index(request):
     posts = Post.objects.all().order_by('-created_at')
-    topics = Topic.objects.all().order_by('-created_at')
+    topics = Topic.objects.order_by('-created_at')
+    subscriptions = Subscription.objects.filter(user=request.user).order_by('-created_at')
+    subscribed_topics = []
+    for subscription in subscriptions:
+        subscribed_topics.append(subscription.topic)
+
     if request.user.is_authenticated:
         bookmarks = UserBookmarking.objects.filter(user=request.user)
         bookmarked_posts = []
@@ -19,10 +26,11 @@ def index(request):
             post = Post.objects.get(id=bookmark.post.id)
             bookmarked_posts.append(post)
 
-        context = {'posts': posts, 'topics': topics, 'bookmarked_posts': bookmarked_posts}
+        context = {'posts': posts, 'bookmarked_posts': bookmarked_posts,
+                   'subscribed_topics': subscribed_topics}
 
     else:
-        context = {'posts': posts, 'topics': topics}
+        context = {'posts': posts, 'topics': topics, 'subscribed_topics': subscribed_topics}
 
     return render(request, 'boomnet/index.html', context)
 
@@ -32,6 +40,7 @@ def view_profile(request, slug):
     profile = Profile.objects.get(slug=slug)
     user = profile.user
     posts = Post.objects.filter(user=user).order_by('-created_at')
+
     context = {"profile": profile, "posts": posts, 'user': user}
     return render(request, 'boomnet/view_profile.html', context)
 
@@ -176,14 +185,14 @@ def vote_post(request, slug):
         post.total_votes -= 1
     post.save()
 
-    return JsonResponse({'likes': post.total_votes})
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
 def view_bookmarks(request):
     bookmarks = UserBookmarking.objects.filter(user=request.user).order_by('-created_at')
 
-    context = {'bookmarks': bookmarks,}
+    context = {'bookmarks': bookmarks}
     return render(request, 'boomnet/view_bookmarks.html', context)
 
 
@@ -224,6 +233,34 @@ def unsubscribe(request, slug):
 
 
 @login_required
+def follow(request, slug):
+    following_profile = Profile.objects.get(slug=slug)
+    following_user = following_profile.user
+    new_following = Following(follower=request.user, following_user=following_user)
+    new_following.save()
+    following_profile.followers += 1
+
+    check = tools.check_following(request_user=request.user, following_user=following_user)
+
+    context = {'profile': following_profile, 'check': check}
+    return render(request, 'boomnet/view_profile.html', context)
+
+
+@login_required
+def unfollow(request, slug):
+    following_profile = Profile.objects.get(slug=slug)
+    following_user = following_profile.user
+    prev_following = Following.objects.get(follower=request.user, following_user=following_user)
+    prev_following.delete()
+    following_profile.followers -= 1
+
+    check = tools.check_following(request_user=request.user, following_user=following_user)
+
+    context = {'profile': following_profile, 'check': check}
+    return render(request, 'boomnet/view_profile.html', context)
+
+
+@login_required
 def delete_comment(request, slug, comment_id):
     post = Post.objects.get(slug=slug)
     comment = Comment.objects.get(pk=comment_id, post=post)
@@ -243,9 +280,8 @@ def sign_up(request):
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
 
-            # Profile.objects.create(user=new_user)
             new_profile = Profile(user=new_user)
-            new_profile.slug = slugify(new_user.username)
+            new_profile.save()
 
             context = {'new_user': new_user}
             return render(request, 'boomnet/sign_up_done.html', context)

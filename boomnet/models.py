@@ -10,8 +10,13 @@ class Profile(models.Model):
     date_of_birth = models.DateField(blank=True, null=True)
     info = models.TextField(blank=True)
     slug = models.SlugField(unique=True)
+    followers = models.IntegerField(default=0)
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.user.username)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.user.username
@@ -47,6 +52,10 @@ class Post(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title
 
@@ -73,6 +82,13 @@ class UserBookmarking(models.Model):
     """Adding post to user's bookmarks. Creating user-post relationship"""
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class Following(models.Model):
+    follower = models.ForeignKey(User, related_name='follower', on_delete=models.CASCADE)
+    following_user = models.ForeignKey(User, related_name='following_user', on_delete=models.CASCADE)
 
     created_at = models.DateTimeField(auto_now_add=True)
 

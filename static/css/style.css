@@ -13,6 +13,11 @@
     position: relative;
 }
 
+.post-content{
+    max-height: 400px;
+    overflow: hidden;
+}
+
 .post-data{
     /*margin-left: 20px;*/
 }
@@ -28,6 +33,10 @@
     /*color: white;*/
 }
 
+.adds-block{
+    margin-top: 10px;
+}
+
 .adds{
     font-size: 10px;
     /*color: white;*/
@@ -41,6 +50,10 @@
 .no-underline{
     text-decoration: none;
     color: black;
+}
+
+.profile-link{
+    margin-left: 8%;
 }
 
 img{

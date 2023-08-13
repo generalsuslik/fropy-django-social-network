@@ -17,14 +17,3 @@ window.addEventListener('click', function(event) {
   }
 });
 
-function votePost(postSlug){
-  $.ajax({
-        url: '/post/' + postSlug +'/vote/',
-        type: 'POST',
-        dataType: 'json',
-        success: function(data) {
-            $('#post-' + postSlug + '-likes').text(data.likes);
-        }
-    });
-    return false
-}

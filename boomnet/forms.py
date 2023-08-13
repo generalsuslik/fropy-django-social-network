@@ -45,7 +45,7 @@ class AddCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['image', 'text']
-        widgets = {'text': forms.Textarea(attrs={'cols': 70, 'rows': 4})}
+        widgets = {'text': forms.Textarea(attrs={'cols': 80, 'rows': 4})}
 
 
 class NewTopicForm(forms.ModelForm):

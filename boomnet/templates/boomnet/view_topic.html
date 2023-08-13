@@ -42,8 +42,8 @@
                     </div>
                 {% endif %}
                 <p class="info-adds">Author: <a href="{% url 'boomnet:view_profile' topic.author.profile.slug %}">{{ topic.author.username }}</a></p>
-                <p class="info-adds">Created at: {{ topic.created_at }}</p>
-                <p>Subscribers: {{ subscribers }}</p>
+                <p class="info-adds">Created {{ topic.created_at }}</p>
+                <p>Members: {{ subscribers }}</p>
             </div>
         </div>
         <br>

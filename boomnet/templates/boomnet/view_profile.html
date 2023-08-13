@@ -10,7 +10,21 @@
                     <img class="avatar" src="{{ profile.avatar.url }}" alt="Avatar">
             {% endif %}
             <h3 class="nickname">{{ user.username }}</h3>
+            {% if request.user != profile.user %}
+                {% if not check %}
+                    <form action="{% url 'boomnet:follow' profile.slug %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" value="Follow">Follow</button>
+                    </form>
+                {% else %}
+                    <form action="{% url 'boomnet:unfollow' profile.slug %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" value="Unfollow">Unfollow</button>
+                    </form>
+                {% endif %}
+            {% endif %}
         </div>
+        <p>Followers: {{ profile.followers }}</p>
         {% if profile.info %}
             <div class="super-info">
                 <h4>Info:</h4>
