@@ -60,6 +60,14 @@ class Post(models.Model):
         return self.title
 
 
+class Vote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    vote_type = models.CharField(max_length=9, default="None")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
 class Comment(models.Model):
     """Comment database model. User can comment posts"""
     author = models.ForeignKey(User, on_delete=models.CASCADE)

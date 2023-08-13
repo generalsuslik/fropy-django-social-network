@@ -4,39 +4,39 @@
 
 
 {% block content %}
-    <hr>
+{#    <hr class="white-text">#}
 
     <div class="fropy">
 
         {% for post in posts %}
 
-            <div class="post">
+            <div class="post bg-dark">
                 <div class="shapka">
                     {% if post.topic %}
 
-                        <div class="author-link">
+                        <span class="author-link">
                             <a href="{% url 'boomnet:view_topic' post.topic.slug %}" class="no-underline">
-                                <div class="comment-author">
+                                <span class="comment-author">
                                     {% if post.topic.image %}
                                         <img class="avatar" src="{{ post.topic.image.url }}" alt="topic_img">
                                     {% endif %}
                                     {{ post.topic.title }}
-                                    <a>
+                                    <span>
                                         | Posted by:
                                         <a href="{% url 'boomnet:view_profile' post.user.profile.slug %}">
                                             {{ post.user.username }}
                                         </a>
-                                    </a>
-                                </div>
+                                    </span>
+                                </span>
                             </a>
-                        </div>
+                        </span>
 
                     {% else %}
 
                         <div class="author-link">
                             <a href="{% url 'boomnet:view_profile' post.user.profile.slug %}">
                                 <div class="comment-author">
-                                    <img src="{% url 'boomnet:view_profile' post.user.profile.slug %}" alt="av">
+                                    <img src="{{ post.user.profile.avatar.url }}" class="avatar" alt="av">
                                     {{ post.user.username }}
                                 </div>
                             </a>
@@ -45,13 +45,13 @@
                     {% endif %}
                 </div>
 
-                <div>
+                <div class="white-text">
                     <form method="post" action="{% url 'boomnet:vote' post.slug %}">
                         {% csrf_token %}
                         <input type="hidden" name="post_slug" value="{{ post.slug }}">
-                        <button type="submit" name="vote_type" value="1" class="up-vote">Upvote</button>
+                        <button type="submit" name="vote_type" value="upvote" class="up-vote">Upvote</button>
                         {{ post.total_votes }}
-                        <button type="submit" name="vote_type" value="-1" class="down-vote">Downvote</button>
+                        <button type="submit" name="vote_type" value="downvote" class="down-vote">Downvote</button>
                     </form>
 
                 </div>

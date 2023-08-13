@@ -1,4 +1,12 @@
 /* --------- Main stuff --------- */
+.navbar{
+    overflow: hidden;
+    position: fixed;
+    /*top: 0;*/
+    width: 100%;
+    border-bottom: 1px solid #565454;
+}
+
 .fropy{
     margin-left: 20%;
     margin-right: 35%;
@@ -6,20 +14,15 @@
 }
 
 .post{
-    border: solid 1px;
+    border: solid 1px #565454;
     margin-bottom: 30px;
     border-radius: 7px;
-    /*background-color: #061f1f;*/
     position: relative;
 }
 
 .post-content{
     max-height: 400px;
     overflow: hidden;
-}
-
-.post-data{
-    /*margin-left: 20px;*/
 }
 
 .post-image{
@@ -30,7 +33,7 @@
 
 .post-text{
     margin-left: 60px;
-    /*color: white;*/
+    color: white;
 }
 
 .adds-block{
@@ -39,7 +42,7 @@
 
 .adds{
     font-size: 10px;
-    /*color: white;*/
+    color: white;
     margin-left: 10px;
 }
 
@@ -56,6 +59,40 @@
     margin-left: 8%;
 }
 
+.white-text{
+    color: white;
+}
+
+.form-container{
+    color: white;
+    margin-left: 50px;
+    margin-right: 40%;
+    border-radius: 10px;
+}
+
+.form-title{
+    margin-left: 20px;
+}
+
+.container{
+    margin-left: 100px;
+}
+
+
 img{
     width: 85%;
 }
+
+p{
+    color: white;
+}
+
+::-webkit-scrollbar {
+  /*width: 20px;*/
+  background-color: #333;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #666;
+}
+

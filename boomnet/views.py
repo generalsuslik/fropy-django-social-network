@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 
-from .models import Profile, Post, Comment, Topic, Subscription, UserBookmarking, Following
+from .models import Profile, Post, Comment, Topic, Subscription, UserBookmarking, Following, Vote
 from .forms import AddPostForm, UserSignupForm, UserEditForm, ProfileEditForm, AddCommentForm, NewTopicForm
 
 from . import tools
@@ -179,10 +179,35 @@ def vote_post(request, slug):
     vote_type = request.POST.get('vote_type')
     post = Post.objects.get(slug=slug)
 
-    if vote_type == '1':
-        post.total_votes += 1
-    elif vote_type == '-1':
-        post.total_votes -= 1
+    if Vote.objects.filter(user=request.user, post=post).exists():
+        vote = Vote.objects.get(user=request.user, post=post)
+        if vote.vote_type == vote_type:
+            vote.delete()
+            if vote_type == 'upvote':
+                post.total_votes -= 1
+
+            else:
+                post.total_votes += 1
+
+        else:
+            vote.delete()
+            vote = Vote(user=request.user, post=post, vote_type=vote_type)
+            vote.save()
+            if vote_type == 'upvote':
+                post.total_votes += 2
+
+            else:
+                post.total_votes -= 2
+
+    else:
+        vote = Vote(user=request.user, post=post, vote_type=vote_type)
+        vote.save()
+        if vote_type == 'upvote':
+            post.total_votes += 1
+
+        else:
+            post.total_votes -= 1
+
     post.save()
 
     return redirect(request.META.get('HTTP_REFERER'))

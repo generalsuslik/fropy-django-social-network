@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Post, Profile, Comment, Topic
+from .models import Post, Profile, Comment, Topic, Subscription
 
 
 class AddPostForm(forms.ModelForm):
@@ -10,6 +10,15 @@ class AddPostForm(forms.ModelForm):
         model = Post
         fields = ['topic', 'title', 'image', 'text']
         widgets = {'text': forms.Textarea(attrs={'cols': 80, 'rows': 10})}
+
+    # def __init__(self, *args, **kwargs):
+    #     user = kwargs.get('user', None)
+    #     user_subscriptions = Subscription.objects.filter(user=user)
+    #     # user_author_topics = Topic.objects.filter(author=user)
+    #     # for topic in user_author_topics:
+    #     #     user_subscriptions.append(topic)
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['topic'].queryset = user_subscriptions
 
 
 class UserSignupForm(UserCreationForm):
