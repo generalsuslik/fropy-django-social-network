@@ -22,8 +22,15 @@
 }
 
 .about{
-    margin-left: 10px;
+    margin-left: 1000px;
     margin-top: 15px;
+    margin-right: 100px;
+    border: 1px solid #565454;
+    border-radius: 7px;
+}
+
+.about-content{
+    margin: 20px;
 }
 
 .button{

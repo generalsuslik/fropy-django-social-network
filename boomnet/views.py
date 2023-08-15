@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 
-from .models import Profile, Post, Comment, Topic, Subscription, UserBookmarking, Following, Vote
+from .models import Profile, Post, Comment, Topic, Subscription, UserBookmarking, Vote, Following
 from .forms import AddPostForm, UserSignupForm, UserEditForm, ProfileEditForm, AddCommentForm, NewTopicForm
 
 from . import tools
@@ -40,8 +40,12 @@ def view_profile(request, slug):
     profile = Profile.objects.get(slug=slug)
     user = profile.user
     posts = Post.objects.filter(user=user).order_by('-created_at')
+    followers = len(Following.objects.filter(target_user=user))
 
-    context = {"profile": profile, "posts": posts, 'user': user}
+    context = {"profile": profile,
+               "posts": posts,
+               "check_following": tools.check_following(follower=request.user, target_user=user),
+               "followers": followers}
     return render(request, 'boomnet/view_profile.html', context)
 
 
@@ -259,29 +263,27 @@ def unsubscribe(request, slug):
 
 @login_required
 def follow(request, slug):
-    following_profile = Profile.objects.get(slug=slug)
-    following_user = following_profile.user
-    new_following = Following(follower=request.user, following_user=following_user)
-    new_following.save()
-    following_profile.followers += 1
+    target_profile = Profile.objects.get(slug=slug)
+    target_user = target_profile.user
+    check_following = tools.follow_if_necessary(follower=request.user, target_user=target_user)
 
-    check = tools.check_following(request_user=request.user, following_user=following_user)
+    posts = Post.objects.filter(user=target_user)
 
-    context = {'profile': following_profile, 'check': check}
+    followers = len(Following.objects.filter(target_user=target_user))
+    context = {'profile': target_profile, 'posts': posts, 'check_following': check_following, "followers": followers}
     return render(request, 'boomnet/view_profile.html', context)
 
 
 @login_required
 def unfollow(request, slug):
-    following_profile = Profile.objects.get(slug=slug)
-    following_user = following_profile.user
-    prev_following = Following.objects.get(follower=request.user, following_user=following_user)
-    prev_following.delete()
-    following_profile.followers -= 1
+    target_profile = Profile.objects.get(slug=slug)
+    target_user = target_profile.user
+    check_following = tools.unfollow_if_necessary(follower=request.user, target_user=target_user)
 
-    check = tools.check_following(request_user=request.user, following_user=following_user)
+    posts = Post.objects.filter(user=target_user)
 
-    context = {'profile': following_profile, 'check': check}
+    followers = len(Following.objects.filter(target_user=target_user))
+    context = {'profile': target_profile, 'posts': posts, 'check_following': check_following, "followers": followers}
     return render(request, 'boomnet/view_profile.html', context)
 
 

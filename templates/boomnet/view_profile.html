@@ -1,54 +1,49 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ topic.title }}{% endblock %}
-
+{% block title %}{{ profile.user.username }}{% endblock %}
 
 {% block content %}
 
-    <div class="topic">
-        <div class="main-topic-info">
-            <div class="topic_main" id="topic_main">
-                {% if topic.image %}
-                    <img class="avatar" src="{{ topic.image.url }}" alt="topic_image">
+    <div class="profile">
+        <div class="profile1">
+            {% if profile.avatar %}
+                <img class="avatar" src="{{ profile.avatar.url }}" alt="Avatar">
+            {% endif %}
+            <h3 class="nickname">{{ profile.user.username }}</h3>
+            {% if request.user != profile.user %}
+                {% if not check_following %}
+                    <form method="post" action="{% url 'boomnet:follow' profile.slug %}">
+                        {% csrf_token %}
+                        <button type="submit" value="Follow" class="button">Follow</button>
+                    </form>
+                {% else %}
+                    <form method="post" action="{% url 'boomnet:unfollow' profile.slug %}">
+                        {% csrf_token %}
+                        <button type="submit" class="button" value="Unfollow">Unfollow</button>
+                    </form>
                 {% endif %}
-                <h3 class="nickname">{{ topic.title }}</h3>
-                <div class="button">
-                    {% if is_author %}
-                        <form action="{% url 'boomnet:delete_topic' topic.slug %}" method="post">
-                            {% csrf_token %}
-                            <button class="topic-button" type="submit">Delete {{ topic.title }}</button>
-                        </form>
-                    {% else %}
-                        {% if subscription_exists %}
-                          <form action="{% url 'boomnet:unsubscribe' topic.slug %}" method="post">
-                            {% csrf_token %}
-                            <button class="topic-button" type="submit">Leave</button>
-                          </form>
-                        {% else %}
-                          <form action="{% url 'boomnet:subscribe' topic.slug %}" method="post">
-                            {% csrf_token %}
-                            <button class="topic-button" type="submit">Join</button>
-                          </form>
-                        {% endif %}
+            {% endif %}
+        </div>
+        <p>Followers: {{ followers }}</p>
+        {% if profile.info %}
+            <div class="super-info">
+                <h4 class="white-text">Info:</h4>
+                <div class="profile-info">
+                    <p class="info">{{ profile.info }}</p>
+
+                    {% if profile.date_of_birth %}
+                        <p class="info-adds">Birthdate: {{ profile.date_of_birth }}</p>
                     {% endif %}
+                    <p class="info-adds">Joined Fropy: {{ profile.created_at }}</p>
                 </div>
             </div>
+        {% endif %}
+    </div>
 
-            <div class="about">
-                <h4>About {{ topic.title }}:</h4>
-                {% if topic.description %}
-                    <div class="topic-info">
-                        <p class="info">{{ topic.description }}</p>
-                    </div>
-                {% endif %}
-                <p class="info-adds">Author: <a href="{% url 'boomnet:view_profile' topic.author.profile.slug %}">{{ topic.author.username }}</a></p>
-                <p class="info-adds">Created {{ topic.created_at }}</p>
-                <p>Members: {{ subscribers }}</p>
-            </div>
-        </div>
-        <br>
-
-        <div class="fropy">
+    <br>
+    <h3 class="white-text">{{ profile.user.username }}'s posts:</h3>
+    <hr class="white-text">
+    <div class="fropy">
 
         {% for post in posts %}
 
@@ -78,7 +73,7 @@
                         <div class="author-link">
                             <a href="{% url 'boomnet:view_profile' post.user.profile.slug %}">
                                 <div class="comment-author">
-                                    <img src="{{ post.user.profile.avatar.url }}" class="avatar" alt="av">
+                                    <img class="avatar" src="{{ post.user.profile.avatar.url }}" alt="av">
                                     {{ post.user.username }}
                                 </div>
                             </a>
@@ -135,4 +130,3 @@
     </div>
 
 {% endblock %}
-

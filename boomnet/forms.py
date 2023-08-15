@@ -11,15 +11,6 @@ class AddPostForm(forms.ModelForm):
         fields = ['topic', 'title', 'image', 'text']
         widgets = {'text': forms.Textarea(attrs={'cols': 80, 'rows': 10})}
 
-    # def __init__(self, *args, **kwargs):
-    #     user = kwargs.get('user', None)
-    #     user_subscriptions = Subscription.objects.filter(user=user)
-    #     # user_author_topics = Topic.objects.filter(author=user)
-    #     # for topic in user_author_topics:
-    #     #     user_subscriptions.append(topic)
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['topic'].queryset = user_subscriptions
-
 
 class UserSignupForm(UserCreationForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
