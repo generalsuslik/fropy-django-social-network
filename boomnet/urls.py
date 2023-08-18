@@ -18,6 +18,7 @@ urlpatterns = [
     path('post/<slug:slug>/vote', views.vote_post, name='vote'),
     path('post/<slug:slug>/comments/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
     path('post/<slug:slug>/', views.post_detail, name='post_detail'),
+    path('topic/<slug:topic_slug>/post/create', views.add_post_to_topic, name='add_post_to_topic'),
 
     path('topic/create/', views.new_topic, name='new_topic'),
     path('topic/<slug:slug>/', views.view_topic, name='view_topic'),

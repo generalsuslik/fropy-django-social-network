@@ -10,7 +10,6 @@ class Profile(models.Model):
     date_of_birth = models.DateField(blank=True, null=True)
     info = models.TextField(blank=True)
     slug = models.SlugField(unique=True)
-    followers = models.IntegerField(default=0)
 
     created_at = models.DateTimeField(auto_now_add=True)
 

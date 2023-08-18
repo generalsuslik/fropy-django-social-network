@@ -12,6 +12,13 @@ class AddPostForm(forms.ModelForm):
         widgets = {'text': forms.Textarea(attrs={'cols': 80, 'rows': 10})}
 
 
+class AddPostToTopicForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'image', 'text']
+        widgets = {'text': forms.Textarea(attrs={'cols': 80, 'rows': 10})}
+
+
 class UserSignupForm(UserCreationForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repeat Password', widget=forms.PasswordInput)

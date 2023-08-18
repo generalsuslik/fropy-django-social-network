@@ -4,7 +4,6 @@
 
 
 {% block content %}
-{#    <hr class="white-text">#}
 
     <div class="fropy">
 
@@ -76,11 +75,23 @@
                     <p class="adds">Created {{ post.created_at }}</p>
                     <a class="adds" href="{% url 'boomnet:post_detail' post.slug %}">View all comments</a>
                     {% if request.user.is_authenticated %}
+                        <a class="adds" href="#">Share</a>
                         {% if post in bookmarked_posts %}
                             <a class="adds" href="{% url 'boomnet:remove_post_from_bookmarks' post.slug %}">Remove from bookmarks</a>
                         {% else %}
                             <a class="adds" href="{% url 'boomnet:add_post_to_bookmarks' post.slug %}">Add to bookmarks</a>
                         {% endif %}
+                        <button id="menuButton">&#8943;</button>
+                        <div id="menu" class="hidden bg-dark">
+                            <dl>
+                                {% if post.topic %}
+                                    <dd><a class="no-underline" href="#">Mute {{ post.topic.title }}</a></dd>
+                                {% else %}
+                                    <dd><a class="no-underline" href="#">Mute {{ post.user.username }}</a></dd>
+                                {% endif %}
+                                <dd><a class="no-underline" href="#">Hide</a></dd>
+                            </dl>
+                        </div>
                     {% endif %}
                 </div>
 

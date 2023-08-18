@@ -33,7 +33,11 @@
                     {% endif %}
                 </div>
             </div>
+        </div>
+        <br>
+        <hr class="white-text">
 
+        <div class="wrapper">
             <div class="about bg-dark">
                 <div class="about-content">
                     <h4 class="white-text">About {{ topic.title }}:</h4>
@@ -45,99 +49,100 @@
                     <p class="info-adds">Author: <a href="{% url 'boomnet:view_profile' topic.author.profile.slug %}">{{ topic.author.username }}</a></p>
                     <p class="info-adds">Created {{ topic.created_at }}</p>
                     <p>Members: {{ subscribers }}</p>
-                    <form method="post" action="{% url 'boomnet:upload_post' %}">
+                    <form method="post" action="{% url 'boomnet:add_post_to_topic' topic.slug %}">
                         {% csrf_token %}
                         <button type="submit">Create new post</button>
                     </form>
                 </div>
             </div>
-        </div>
-        <br>
 
-        <div class="fropy">
+    {#        <br>#}
 
-            {% for post in posts %}
+            <div class="fropy">
 
-                <div class="post bg-dark">
-                    <div class="shapka">
-                        {% if post.topic %}
+                {% for post in posts %}
 
-                            <span class="author-link">
-                                <a href="{% url 'boomnet:view_topic' post.topic.slug %}" class="no-underline">
-                                    <span class="comment-author">
-                                        {% if post.topic.image %}
-                                            <img class="avatar" src="{{ post.topic.image.url }}" alt="topic_img">
-                                        {% endif %}
-                                        {{ post.topic.title }}
-                                        <span>
-                                            | Posted by:
-                                            <a href="{% url 'boomnet:view_profile' post.user.profile.slug %}">
-                                                {{ post.user.username }}
-                                            </a>
+                    <div class="post bg-dark">
+                        <div class="shapka">
+                            {% if post.topic %}
+
+                                <span class="author-link">
+                                    <a href="{% url 'boomnet:view_topic' post.topic.slug %}" class="no-underline">
+                                        <span class="comment-author">
+                                            {% if post.topic.image %}
+                                                <img class="avatar" src="{{ post.topic.image.url }}" alt="topic_img">
+                                            {% endif %}
+                                            {{ post.topic.title }}
+                                            <span>
+                                                | Posted by:
+                                                <a href="{% url 'boomnet:view_profile' post.user.profile.slug %}">
+                                                    {{ post.user.username }}
+                                                </a>
+                                            </span>
                                         </span>
-                                    </span>
-                                </a>
-                            </span>
+                                    </a>
+                                </span>
 
-                        {% else %}
-
-                            <div class="author-link">
-                                <a href="{% url 'boomnet:view_profile' post.user.profile.slug %}">
-                                    <div class="comment-author">
-                                        <img src="{{ post.user.profile.avatar.url }}" class="avatar" alt="av">
-                                        {{ post.user.username }}
-                                    </div>
-                                </a>
-                            </div>
-
-                        {% endif %}
-                    </div>
-
-                    <div class="white-text">
-                        <form method="post" action="{% url 'boomnet:vote' post.slug %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="post_slug" value="{{ post.slug }}">
-                            <button type="submit" name="vote_type" value="upvote" class="up-vote">Upvote</button>
-                            {{ post.total_votes }}
-                            <button type="submit" name="vote_type" value="downvote" class="down-vote">Downvote</button>
-                        </form>
-
-                    </div>
-
-                    <a href="{% url 'boomnet:post_detail' post.slug %}" class="no-underline">
-                        <div class="post-content">
-                            <div class="post-title">
-                                <h4>{{ post.title|linebreaks }}</h4>
-                            </div>
-                            <div class="post-text">
-                                {{ post.text|linebreaks }}
-                            </div>
-                            <div class="post-image">
-                                {% if post.image %}
-                                    <img src="{{ post.image.url }}" alt="postimg">
-                                {% endif %}
-                            </div>
-                        </div>
-                    </a>
-
-                    <div class="adds-block">
-                        <p class="adds">Created {{ post.created_at }}</p>
-                        <a class="adds" href="{% url 'boomnet:post_detail' post.slug %}">View all comments</a>
-                        {% if request.user.is_authenticated %}
-                            {% if post in bookmarked_posts %}
-                                <a class="adds" href="{% url 'boomnet:remove_post_from_bookmarks' post.slug %}">Remove from bookmarks</a>
                             {% else %}
-                                <a class="adds" href="{% url 'boomnet:add_post_to_bookmarks' post.slug %}">Add to bookmarks</a>
+
+                                <div class="author-link">
+                                    <a href="{% url 'boomnet:view_profile' post.user.profile.slug %}">
+                                        <div class="comment-author">
+                                            <img src="{{ post.user.profile.avatar.url }}" class="avatar" alt="av">
+                                            {{ post.user.username }}
+                                        </div>
+                                    </a>
+                                </div>
+
                             {% endif %}
-                        {% endif %}
+                        </div>
+
+                        <div class="white-text">
+                            <form method="post" action="{% url 'boomnet:vote' post.slug %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="post_slug" value="{{ post.slug }}">
+                                <button type="submit" name="vote_type" value="upvote" class="up-vote">Upvote</button>
+                                {{ post.total_votes }}
+                                <button type="submit" name="vote_type" value="downvote" class="down-vote">Downvote</button>
+                            </form>
+
+                        </div>
+
+                        <a href="{% url 'boomnet:post_detail' post.slug %}" class="no-underline">
+                            <div class="post-content">
+                                <div class="post-title">
+                                    <h4>{{ post.title|linebreaks }}</h4>
+                                </div>
+                                <div class="post-text">
+                                    {{ post.text|linebreaks }}
+                                </div>
+                                <div class="post-image">
+                                    {% if post.image %}
+                                        <img src="{{ post.image.url }}" alt="postimg">
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </a>
+
+                        <div class="adds-block">
+                            <p class="adds">Created {{ post.created_at }}</p>
+                            <a class="adds" href="{% url 'boomnet:post_detail' post.slug %}">View all comments</a>
+                            {% if request.user.is_authenticated %}
+                                {% if post in bookmarked_posts %}
+                                    <a class="adds" href="{% url 'boomnet:remove_post_from_bookmarks' post.slug %}">Remove from bookmarks</a>
+                                {% else %}
+                                    <a class="adds" href="{% url 'boomnet:add_post_to_bookmarks' post.slug %}">Add to bookmarks</a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+
                     </div>
 
-                </div>
+                {% empty %}
+                    <p>No posts yet</p>
+                {% endfor %}
 
-            {% empty %}
-                <p>No posts yet</p>
-            {% endfor %}
-
+            </div>
         </div>
     </div>
 

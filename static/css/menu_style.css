@@ -1,34 +1,24 @@
-.options-button {
-  margin-left: 100%;
+#menuButton {
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 24px;
   cursor: pointer;
+  color: white;
 }
 
-.options-menu {
+#menu {
   position: absolute;
-  top: 0;
-  right: 0;
-  display: none;
-  /* Other menu styles */
-}
-
-.options-menu ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.options-menu ul li {
+  background-color: #565454;
   padding: 10px;
+  border: 1px solid #565454;
+  border-radius: 7px;
+  box-shadow: 0 2px 5px rgba(127, 127, 127, 0.3);
+  margin-right: 250px;
+  margin-left: 200px;
+  color: white;
+  z-index: 9999;
 }
 
-.options-menu ul li a {
-  text-decoration: none;
-  color: black;
-}
-
-.options-button:hover + .options-menu,
-.options-menu:hover {
-  display: block;
+.hidden {
+  display: none;
 }

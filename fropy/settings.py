@@ -9,9 +9,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
+load_dotenv()
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--r+@rw4q&(6_$kte(z0#&z)^aj^wo6ee__9vyo+947qohx0e!p'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -24,9 +24,6 @@ ALLOWED_HOSTS = ['fropy.com', '127.0.0.1', 'localhost']
 INSTALLED_APPS = [
     # fropy apps
     'boomnet.apps.BoomnetConfig',
-    'chat.apps.ChatConfig',
-
-    'channels',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -68,16 +65,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'fropy.wsgi.application'
 ASGI_APPLICATION = 'fropy.asgi.application'
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': "channels.layers.InMemoryChannelLayer",
-    }
-}
-
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-load_dotenv()
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',

@@ -16,15 +16,15 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{% url 'boomnet:new_topic' %}">Create topic</a></li>
             <li><hr class="dropdown-divider"></li>
-            {% if topics %}
-              {% for topic in subscribed_topics %}
-                <li><a class="dropdown-item" href="{% url 'boomnet:view_topic' topic.slug %}">{{ topic.title }}</a></li>
+            {% if subscriptions %}
+              {% for subscription in subscriptions %}
+                <li><a class="dropdown-item" href="{% url 'boomnet:view_topic' subscription.topic.slug %}">{{ subscription.topic.title }}</a></li>
               {% endfor %}
             {% endif %}
           </ul>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'chat:index' %}">Chat</a>
+            <a class="nav-link" href="#">Chat</a>
         </li>
       </ul>
       <form class="d-flex" role="search" style="vertical-align: middle" method="get" action="{% url 'boomnet:search_users_and_topics' %}">

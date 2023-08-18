@@ -1,8 +1,6 @@
 /* --------- Main stuff --------- */
 .navbar{
-    overflow: hidden;
     position: fixed;
-    /*top: 0;*/
     width: 100%;
     border-bottom: 1px solid #565454;
 }
@@ -10,7 +8,6 @@
 .fropy{
     margin-left: 20%;
     margin-right: 35%;
-    /*background-color: black;*/
 }
 
 .post{
@@ -33,6 +30,7 @@
 
 .post-text{
     margin-left: 60px;
+    margin-right: 50px;
     color: white;
 }
 
@@ -52,7 +50,7 @@
 
 .no-underline{
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 .profile-link{
@@ -66,7 +64,7 @@
 .form-container{
     color: white;
     margin-left: 50px;
-    margin-right: 40%;
+    margin-right: 35%;
     border-radius: 10px;
 }
 
