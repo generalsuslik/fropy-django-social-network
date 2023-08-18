@@ -17,10 +17,10 @@
     position: relative;
 }
 
-/*.post-content{*/
-/*    !*max-height: 400px;*!*/
-/*    overflow: hidden;*/
-/*}*/
+input[type="text"] {
+  background-color: #383737;
+  color: white;
+}
 
 .post-image{
     text-align: center;
