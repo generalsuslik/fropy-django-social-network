@@ -17,10 +17,10 @@
     position: relative;
 }
 
-.post-content{
-    max-height: 400px;
-    overflow: hidden;
-}
+/*.post-content{*/
+/*    !*max-height: 400px;*!*/
+/*    overflow: hidden;*/
+/*}*/
 
 .post-image{
     text-align: center;

@@ -2,14 +2,13 @@
 
 {% block title %}Fropy{% endblock %}
 
-
 {% block content %}
 
     <div class="fropy">
 
         {% for post in posts %}
 
-            <div class="post bg-dark">
+            <div class="post bg-dark" id="post">
                 <div class="shapka">
                     {% if post.topic %}
 
@@ -81,8 +80,8 @@
                         {% else %}
                             <a class="adds" href="{% url 'boomnet:add_post_to_bookmarks' post.slug %}">Add to bookmarks</a>
                         {% endif %}
-                        <button id="menuButton">&#8943;</button>
-                        <div id="menu" class="hidden bg-dark">
+                        <button class="menuButton" id="menuButton">&#8943;</button>
+                        <div id="menu" class="hidden menu bg-dark">
                             <dl>
                                 {% if post.topic %}
                                     <dd><a class="no-underline" href="#">Mute {{ post.topic.title }}</a></dd>
@@ -94,7 +93,6 @@
                         </div>
                     {% endif %}
                 </div>
-
             </div>
 
         {% empty %}
@@ -102,6 +100,6 @@
         {% endfor %}
 
     </div>
-
 {% endblock %}
+
 
