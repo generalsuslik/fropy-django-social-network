@@ -16,8 +16,9 @@ function truncatePost(element) {
   if (height > 400) {
     element.style.maxHeight = '400px';
     element.style.overflow = 'hidden';
-    let gradient = 'linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1) 350px)';
+    let gradient = 'linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1) 100px)';
     element.style.backgroundImage = gradient;
+    element.style.filter = 'brightness(0.7)';
   }
 }
 

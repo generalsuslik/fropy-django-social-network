@@ -7,7 +7,7 @@
 
 .comment-form{
     display: inline-block;
-    border: solid 1px;
+    border: solid 1px #565454;
     border-radius: 7px;
     margin-bottom: 10px;
 }
@@ -19,7 +19,7 @@
 }
 
 .comment{
-    border: solid 1px;
+    border: solid 1px #565454;
     border-radius: 5px;
     margin-bottom: 10px;
 }

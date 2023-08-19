@@ -4,15 +4,18 @@
 
 {% block content %}
 
-    <h1>Create an account</h1>
-    <p>Please, sign up, using the following form:</p>
-    <form method="post">
-{#        {{ profile_form }}#}
-        {{ user_form.as_p}}
-        {% csrf_token %}
-        <p><input type="submit" value="Sign up"></p>
-
-    </form>
+    <div class="authentication bg-dark">
+        <div class="authentication-form">
+            <h1 class="white-text">Create an account</h1>
+            <br>
+            <p style="margin-left: 10px">Please, sign up, using the following form:</p>
+            <form class="login-form" method="post">
+                {{ user_form.as_p}}
+                {% csrf_token %}
+                <p><input type="submit" value="Sign up"></p>
+            </form>
+        </div>
+    </div>
 
 {% endblock %}
 

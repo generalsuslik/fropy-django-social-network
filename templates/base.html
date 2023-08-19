@@ -15,7 +15,11 @@
   </head>
 
   <body class="bg-black" onload="processPosts()">
-    {% include "navbar.html" with subscribed_topics=subscribed_topics%}
+    {% if request.user.is_authenticated %}
+        {% include "navbar.html" with subscribed_topics=subscribed_topics%}
+    {% else %}
+        {% include "navbar.html" %}
+    {% endif %}
     <br>
     <br>
     <br>

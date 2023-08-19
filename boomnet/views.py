@@ -26,12 +26,13 @@ Contents:
 def index(request):
     posts = Post.objects.all().order_by('-created_at')
     topics = Topic.objects.order_by('-created_at')
-    subscriptions = Subscription.objects.filter(user=request.user).order_by('-created_at')
-    subscribed_topics = []
-    for subscription in subscriptions:
-        subscribed_topics.append(subscription.topic)
 
     if request.user.is_authenticated:
+        subscriptions = Subscription.objects.filter(user=request.user).order_by('-created_at')
+        subscribed_topics = []
+        for subscription in subscriptions:
+            subscribed_topics.append(subscription.topic)
+
         bookmarks = UserBookmarking.objects.filter(user=request.user)
         bookmarked_posts = []
         for bookmark in bookmarks:
@@ -42,7 +43,7 @@ def index(request):
                    'subscribed_topics': subscribed_topics}
 
     else:
-        context = {'posts': posts, 'topics': topics, 'subscribed_topics': subscribed_topics}
+        context = {'posts': posts, 'topics': topics}
 
     return render(request, 'boomnet/index.html', context)
 
