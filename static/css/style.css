@@ -17,9 +17,15 @@
     position: relative;
 }
 
-input[type="text"] {
-  background-color: #383737;
-  color: white;
+input[type="text"], input[type="password"], input[type="email"], textarea {
+    border: 1px solid #333333;
+    background-color: #383737;
+    color: white;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, textarea:focus {
+    border-color: white;
+    outline: none;
 }
 
 .post-image{

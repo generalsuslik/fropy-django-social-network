@@ -88,6 +88,7 @@
 
     <div class="comment-block">
         <div class="comment-form bg-dark">
+            <p class="adding">Comment as {{ request.user.username }}</p>
             <div class="form">
                 <form method="post" enctype="multipart/form-data">
                     {{ form.as_p }}

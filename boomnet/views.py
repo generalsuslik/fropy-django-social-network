@@ -65,6 +65,14 @@ def search_users_and_topics(request):
     return render(request, 'boomnet/search_users_and_topics.html', context)
 
 
+@login_required
+def view_settings(request, slug):
+    profile = Profile.objects.get(slug=slug)
+
+    context = {'profile': profile}
+    return render(request, 'boomnet/view_settings.html', context)
+
+
 # --------- Profile Stuff --------- #
 @login_required
 def view_profile(request, slug):

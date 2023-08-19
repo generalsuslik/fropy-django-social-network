@@ -47,8 +47,8 @@
                     <form method="post" action="{% url 'boomnet:vote' post.slug %}">
                         {% csrf_token %}
                         <input type="hidden" name="post_slug" value="{{ post.slug }}">
-                        <button type="submit" name="vote_type" value="upvote" class="up-vote">Upvote</button>
-                        {{ post.total_votes }}
+                        <button type="submit" name="vote_type" value="upvote" class="up-vote" onclick="changeButtonColor()">Upvote</button>
+                        <span class="total_votes">{{ post.total_votes }}</span>
                         <button type="submit" name="vote_type" value="downvote" class="down-vote">Downvote</button>
                     </form>
 
