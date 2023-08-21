@@ -3,11 +3,12 @@
 
 {% block content %}
 
-    <h1>Welcome to IOWA, {{ new_user.username }}!</h1>
-    <p>
-        Ur account has been successfully created.
-        Now u can <a href="{% url 'boomnet:login' %}">Log in</a>
-{#        Now u can go to <a href="{% url 'boomnet:index' %}">Main page</a>#}
-    </p>
+    <div>
+        <h1 class=white-text>Welcome to IOWA, {{ new_user.username }}!</h1>
+        <p>
+            Ur account has been successfully created.
+            Now u can <a href="{% url 'boomnet:login' %}">Log in</a>
+        </p>
+    </div>
 
 {% endblock %}
