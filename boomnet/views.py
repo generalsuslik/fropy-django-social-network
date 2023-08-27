@@ -46,6 +46,7 @@ def index(request):
         context = {'posts': posts, 'topics': topics}
 
     return render(request, 'boomnet/index.html', context)
+    # return render(request, 'index.html')
 
 
 def navbar_topics(request):
@@ -375,3 +376,4 @@ def sign_up_done(request):
     context = {'profile': profile}
 
     return render(request, 'boomnet/sign_up_done.html', context)
+    
