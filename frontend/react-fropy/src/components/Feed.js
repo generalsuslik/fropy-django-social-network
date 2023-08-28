@@ -1,27 +1,36 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import processPosts from '../scripts.js'
 
 
 const Feed = () => {
     const [posts, setPosts] = useState([])
     
     useEffect(() => {
-        axios.get("http://localhost:8000/")
-            .then(response => {
-                setPosts(response.data);
-            })
-            .catch(err => {
-                console.log(err);
-            });
+      axios.get("http://localhost:8000/")
+          .then(response => {
+              setPosts(response.data);
+          })
+          .catch(err => {
+              console.log(err);
+          });
+        
+      processPosts();
     }, []);
+
+    const navigate = useNavigate();
+    const submitHandler = (e) => {
+      e.preventDefault();
+      navigate("/post/i-love-django/");
+    };
 
     const baseUrl = "http://127.0.0.1:8000"
 
     return (
         <div className='fropy'>
           {posts.map(post => (
-            <div className='post xs=' key={post.id}>
+            <div className='post' key={post.id}>
               <div className='shapka'>
                 {post.topic ? (
                   <div className='author-link'>
@@ -48,7 +57,8 @@ const Feed = () => {
                 )}
               </div>
 
-              <Link to={`/post/${post.slug}/`} className='no-underline'>
+              <Link to={`/post/i-love-django/`} className='no-underline'>
+              {/* <div onClick={() => navigate(`post/${post.slug}`)}> */}
                 <div className='post-content'>
                   <div className='post-title'>
                     <h1>{post.title}</h1>
@@ -60,6 +70,7 @@ const Feed = () => {
                     <img src={`${baseUrl}${post.image}`} />
                   </div>
                 </div>
+              {/* </div> */}
               </Link>
 
               <div className='adds-block'>

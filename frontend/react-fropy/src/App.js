@@ -8,14 +8,17 @@ import { Routes, Route } from 'react-router-dom';
 
 
 function App() {
+
   return (
       <div className="App">
         <Navbar />
         <br/>
         <br/>
+        <br/>
+        <br/>
         <Routes>
           <Route path='/' Component={Feed} />
-          <Route path='/posts/:postSlug/' Component={PostContent} />
+          {/* <Route path='/post/:postSlug/' Component={PostContent} /> */}
           {/* <Route path='/:profileSlug' Component={Profile} /> */}
         </Routes>
       </div>

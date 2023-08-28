@@ -4,6 +4,7 @@
 
 body {
     margin: 0;
+    background-color: rgb(8, 8, 8);
 }
 
 img{
@@ -19,13 +20,14 @@ img{
 
 .post{
     border: solid 1px #565454;
+    background-color: #272727;
     margin-bottom: 30px;
     border-radius: 7px;
     position: relative;
+    color: white;
 }
 
 .post-content{
-    max-height: 400px;
     overflow: hidden;
 }
 
@@ -46,6 +48,7 @@ img{
 .adds{
     font-size: 10px;
     margin-left: 10px;
+    color: white;
 }
 
 .shapka{
@@ -58,7 +61,7 @@ img{
     border: none;
     font-size: 24px;
     cursor: pointer;
-    /* color: white; */
+    color: white;
 }
 
 #menu {
@@ -70,7 +73,7 @@ img{
     box-shadow: 0 2px 5px rgba(127, 127, 127, 0.3);
     margin-right: 250px;
     margin-left: 200px;
-    /* color: white; */
+    color: white;
     z-index: 9999;
 }
 
@@ -80,6 +83,7 @@ img{
 
 .author-link{
     margin-right: 300px;
+    color: white;
 }
 
 .avatar{
@@ -95,7 +99,7 @@ img{
 
 .no-underline{
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 
@@ -107,6 +111,10 @@ img{
     align-items: stretch;
     gap: 2rem;
     padding: 0 1rem;
+    position: fixed;
+    width: 100%;
+    border-bottom: 1px solid #565454;
+    z-index: 2;
 }
 
 .site-title{
