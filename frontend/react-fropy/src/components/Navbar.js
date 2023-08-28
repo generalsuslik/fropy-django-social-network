@@ -10,7 +10,7 @@ const Navbar = () => {
           <a href='#'>New post</a>
         </li>
         <li>
-          <a href="#">Profile</a>
+          <Link to={`/profile`}>Profile</Link>
         </li>
       </ul>
     </nav>

@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'
 
 
 const Feed = () => {
@@ -20,21 +21,21 @@ const Feed = () => {
     return (
         <div className='fropy'>
           {posts.map(post => (
-            <div className='post' key={post.id}>
+            <div className='post xs=' key={post.id}>
               <div className='shapka'>
                 {post.topic ? (
-                  <span className='author-link'>
+                  <div className='author-link'>
                     <a href='#' className='no-underline'>
                       <span className='comment-author'>
                         <img className='avatar' src={`${baseUrl}${post.topic.image}`} alt={post.topic.title} />
-                        {post.topic.title}
+                        {post.topic.title}<span> </span>
                         <span>
-                          | Posted by: 
+                           | Posted by: 
                           <a className='no-underline' href='#'>{post.user.username}</a>
                         </span>
                       </span>
                     </a>
-                  </span>    
+                  </div>    
                 ) : (
                   <span className='author-link'>
                     <a className='no-underline' href='#'>
@@ -47,7 +48,7 @@ const Feed = () => {
                 )}
               </div>
 
-              <a href='#' className='no-underline'>
+              <Link to={`/post/${post.slug}/`} className='no-underline'>
                 <div className='post-content'>
                   <div className='post-title'>
                     <h1>{post.title}</h1>
@@ -59,11 +60,11 @@ const Feed = () => {
                     <img src={`${baseUrl}${post.image}`} />
                   </div>
                 </div>
-              </a>
+              </Link>
 
               <div className='adds-block'>
                 <p className='adds'>Created {post.created_at}</p>
-                <a className='adds' href='#'>All comments</a>
+                <Link className='adds' to={{pathname: `/post/${post.slug}/`, state: { post } }}>All comments</Link>
                 <a className='adds' href='#'>Share</a>
                 <a className='adds' href="#">Add to bookmarks</a>
                 <button className='menuButton' id='menuButton'>&#8943;</button>
