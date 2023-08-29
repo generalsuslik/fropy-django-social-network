@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import processPosts from '../scripts.js'
 
 
@@ -18,12 +18,6 @@ const Feed = () => {
         
       processPosts();
     }, []);
-
-    const navigate = useNavigate();
-    const submitHandler = (e) => {
-      e.preventDefault();
-      navigate("/post/i-love-django/");
-    };
 
     const baseUrl = "http://127.0.0.1:8000"
 
@@ -56,12 +50,11 @@ const Feed = () => {
                   </span>
                 )}
               </div>
-
-              <Link to={`/post/i-love-django/`} className='no-underline'>
-              {/* <div onClick={() => navigate(`post/${post.slug}`)}> */}
+              {processPosts()}
+              <Link to={`/post/${post.slug}/`} className='no-underline'>
                 <div className='post-content'>
                   <div className='post-title'>
-                    <h1>{post.title}</h1>
+                    <h2>{post.title}</h2>
                   </div>
                   <div className='post-text'>
                     {post.text}
@@ -70,12 +63,11 @@ const Feed = () => {
                     <img src={`${baseUrl}${post.image}`} />
                   </div>
                 </div>
-              {/* </div> */}
               </Link>
 
               <div className='adds-block'>
                 <p className='adds'>Created {post.created_at}</p>
-                <Link className='adds' to={{pathname: `/post/${post.slug}/`, state: { post } }}>All comments</Link>
+                <Link className='adds' to={`/post/${post.slug}/`}>All comments</Link>
                 <a className='adds' href='#'>Share</a>
                 <a className='adds' href="#">Add to bookmarks</a>
                 <button className='menuButton' id='menuButton'>&#8943;</button>

@@ -18,7 +18,7 @@ function App() {
         <br/>
         <Routes>
           <Route path='/' Component={Feed} />
-          {/* <Route path='/post/:postSlug/' Component={PostContent} /> */}
+          <Route path='/post/:postSlug/' Component={PostContent} />
           {/* <Route path='/:profileSlug' Component={Profile} /> */}
         </Routes>
       </div>
