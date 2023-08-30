@@ -1,10 +1,26 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 
 const TopicInfo = props => {
     const {title, description, image, created_at} = props;
-    const baseUrl = "http://127.0.0.1:8000"
+    const baseUrl = "http://127.0.0.1:8000";
+
+    const [topicSlug] = useParams();
+    const [subscriptions, setSubscriptions] = useState([]);
+
+    useEffect(() => {
+      axios.get(`http://127.0.0.1:8000/topics/${topicSlug}/subscriptions/`)
+        .then(res => {
+          setSubscriptions(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }, [])
+
+    console.log(subscriptions);
 
     return (
         <div className="topic-info-wrapper">

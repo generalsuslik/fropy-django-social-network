@@ -272,6 +272,24 @@ class SubscriptionList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+
+class TopicSubscriptionList(APIView):
+    def get(self, request, slug, format=None):
+        topic = models.Topic.objects.get(slug=slug)
+        subscriptions = models.Subscription.objects.filter(topic=topic).order_by("-created_at")
+        serializer = serializers.SubscriptionSerializer(subscriptions, many=True)
+        
+        return Response(serializer.data)
+    
+    
+class UserSubscriptionList(APIView):
+    def get(self, request, pk, format=None):
+        user = User.objects.get(pk=pk)
+        subscriptions = models.Subscription.objects.filter(user=user).order_by('-created_at')
+        serializer = serializers.SubscriptionSerializer(subscriptions, many=True)
+        
+        return Response(serializer.data)
+    
     
 class SubscriptionDetail(APIView):
     def get_object(self, id):
