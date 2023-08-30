@@ -18,6 +18,15 @@ function processPosts(){
 }
 
 
+function processComments(){
+  const comments = document.querySelector(".comment");
+  comments.forEach(comment => {
+    const commentImage = comment.querySelector('.comment-image');
+    commentImage.style.width = "10px"
+  })
+}
+
+
 function truncatePost(element) {
   let height = element.offsetHeight;
   if (height > 400) {

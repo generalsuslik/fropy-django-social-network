@@ -1,0 +1,18 @@
+.topic-info-wrapper{
+    border: solid 1px #565454;
+    background-color: #272727;
+    border-radius: 7px;
+    color: white;
+}
+
+.topic-info-block{
+    margin: 15px;
+}
+
+.topic-info-block .shapka{
+    display: flex;
+}
+
+.topic-info-block .topic-info{
+    justify-content: space-between;
+}

@@ -21,6 +21,8 @@ Contents:
     Authentication Stuff
 """
 
+# NOT USED ANY MORE! ALL SERIALIEZER STUFF IN api_routes.py NOW!
+
 
 # --------- Main Stuff --------- #
 def index(request):
@@ -46,7 +48,6 @@ def index(request):
         context = {'posts': posts, 'topics': topics}
 
     return render(request, 'boomnet/index.html', context)
-    # return render(request, 'index.html')
 
 
 def navbar_topics(request):

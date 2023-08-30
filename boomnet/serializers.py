@@ -45,3 +45,25 @@ class PostSerializer(serializers.ModelSerializer):
         
     def get_image_url(self, obj):
         return obj.image.url
+    
+    
+class CommentSerializer(serializers.ModelSerializer):
+    author = UserSerializer()
+    post = PostSerializer()
+    # image = serializers.SerializerMethodField('get_image_url')
+    
+    class Meta:
+        model = models.Comment
+        fields = '__all__'
+    
+    def get_image_url(self, obj):
+        return obj.image.url
+    
+    
+class SubscriptionSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    topic = TopicSerializer()
+    
+    class Meta:
+        model = models.Subscription
+        fields = "__all__"

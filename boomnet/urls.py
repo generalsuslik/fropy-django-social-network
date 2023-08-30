@@ -39,12 +39,18 @@ urlpatterns = [
 #     path('profile/<slug:slug>/unfollow/', views.unfollow, name='unfollow'),
     path('', api.PostList.as_view()),
     path('post/<slug:slug>/', api.PostDetail.as_view()),
+    path('comments/', api.CommentsList.as_view()),
+    path('post/<slug:post_slug>/comments/', api.PostCommentsList.as_view()),
+    path('comments/<int:user_id>/<int:post_id>/', api.CommentDetail.as_view()),
     path('users/', api.UserList.as_view()),
     path('user/<int:pk>/', api.UserDetail.as_view()),
     path('profiles/', api.ProfileList.as_view()),
     path('profiles/<slug:slug>/', api.ProfileDetail.as_view()),
+    path('profiles/user/', api.UserProfile.as_view()),
     path('topics/', api.TopicList.as_view()),
     path('topics/<slug:slug>/', api.TopicDetail.as_view()),
+    path('subscriptions/', api.SubscriptionList.as_view()),
+    path('subscriptions/<int:id>/', api.SubscriptionDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

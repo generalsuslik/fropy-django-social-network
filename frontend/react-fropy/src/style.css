@@ -12,10 +12,36 @@ img{
     vertical-align: middle;
 }
 
+.wrapper{
+    display: flex;
+}
+
+.white-text{
+    color: white;
+}
+
+::-webkit-scrollbar {
+    /*width: 20px;*/
+    background-color: #333;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #666;
+}
 
 .fropy{
     margin-left: 20%;
     margin-right: 35%;
+}
+
+.wrapper .fropy{
+    margin-left: 20%;
+    margin-right: 2%;
+}
+
+.wrapper .left-part{
+    background-color: #272727;
+    float: left;
 }
 
 .post{
@@ -26,10 +52,6 @@ img{
     position: relative;
     color: white;
 }
-
-/* .post-content{
-    overflow: hidden;
-} */
 
 .post-image{
     text-align: center;

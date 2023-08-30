@@ -1,0 +1,8 @@
+.comment{
+    border: solid 1px #565454;
+    background-color: #272727;
+    margin-bottom: 30px;
+    border-radius: 7px;
+    position: relative;
+    color: white;
+}

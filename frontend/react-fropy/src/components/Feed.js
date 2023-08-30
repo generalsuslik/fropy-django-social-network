@@ -33,7 +33,7 @@ const Feed = () => {
                         <img className='avatar' src={`${baseUrl}${post.topic.image}`} alt={post.topic.title} />
                         {post.topic.title}<span> </span>
                         <span>
-                           | Posted by: 
+                           | Posted by:<span> </span>
                           <a className='no-underline' href='#'>{post.user.username}</a>
                         </span>
                       </span>

@@ -198,5 +198,105 @@ class TopicDetail(APIView):
         topic = self.get_object(slug)
         topic.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    
+class CommentsList(APIView):
+    def get(self, request, format=None):
+        comments = models.Comment.objects.all().order_by('-created_at')
+        serializer = serializers.CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = serializers.CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+class PostCommentsList(APIView):
+    def get(self, request, post_slug, format=None):
+        post = models.Post.objects.get(slug=post_slug)
+        comments = models.Comment.objects.filter(post=post).order_by('-created_at')
+        serializer = serializers.CommentSerializer(comments, many=True)
+        
+        return Response(serializer.data)
+    
+    def post(self, request, post_slug, format=None):
+        serializer = serializers.CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class CommentDetail(APIView):
+    def get_object(self, user_id, post_id, created_at):
+        try:
+            user = User.objects.get(pk=user_id)
+            post = User.objects.get(pk=post_id)
+            return models.Comment.objects.get(author=user, post=post, created_at=created_at)
+        except models.Topic.DoesNotExist:
+            raise Http404
+
+    def get(self, request, user_id, post_id, created_at, format=None):
+        comment = self.get_object(user_id, post_id, created_at)
+        serializer = serializers.CommentSerializer(comment)
+        return Response(serializer.data)
+
+    def put(self, request, user_id, post_id, created_at, format=None):
+        comment = self.get_object(user_id, post_id, created_at)
+        serializer = serializers.CommentSerializer(comment, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, user_id, post_id, created_at, format=None):
+        comment = self.get_object(user_id, post_id, created_at)
+        comment.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    
+class SubscriptionList(APIView):
+    def get(self, request, format=None):
+        subscriptions = models.Subscription.objects.all().order_by('-created_at')
+        serializer = serializers.SubscriptionSerializer(subscriptions, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = serializers.SubscriptionSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+class SubscriptionDetail(APIView):
+    def get_object(self, id):
+        try:
+            return models.Subscription.objects.get(pk=id)
+        except models.Subscription.DoesNotExist:
+            raise Http404
+
+    def get(self, request, id, format=None):
+        subscription = self.get_object(id)
+        serializer = serializers.SubscriptionSerializer(subscription)
+        return Response(serializer.data)
+
+    def put(self, request, id, format=None):
+        subscription = self.get_object(id)
+        serializer = serializers.SubscriptionSerializer(subscription, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id, format=None):
+        subscription = self.get_object(id)
+        subscription.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
   
     

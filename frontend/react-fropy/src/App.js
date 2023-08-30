@@ -3,7 +3,9 @@ import Navbar from './components/Navbar';
 import Feed from './components/Feed';
 import PostContent from './components/Post';
 import Profile from './components/Profile';
-import './style.css'
+import './style.css';
+import './style_comments.css';
+import './style_topic.css';
 import { Routes, Route } from 'react-router-dom';
 
 
