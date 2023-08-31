@@ -6,13 +6,51 @@
 }
 
 .topic-info-block{
-    margin: 15px;
+    margin: 5px 15px;
 }
 
 .topic-info-block .shapka{
-    display: flex;
+    text-align: left;
+    width: 80%;
+    margin-left: 0px;
+    height: auto;
 }
 
-.topic-info-block .topic-info{
+.topic-info-block .shapka a{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.topic-info-block .wrapper-info .topic-info{
     justify-content: space-between;
+}
+
+.topic-info-block .wrapper-info .user-info{
+    justify-content: space-between;
+}
+
+.topic-info .adds{
+    text-align: left;
+    margin: 0;
+}
+
+.topic-info .topic-members{
+    text-align: left;
+    margin: 0;
+}
+
+.wrapper-info{
+    margin-right: 10%;
+}
+
+.topic-description{
+    text-align: left;
+}
+
+.join-button{
+    width: 100%;
+    border-radius: 7px;
+    background-color: orangered;
+    color: white;
 }

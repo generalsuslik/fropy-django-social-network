@@ -34,19 +34,19 @@ const Feed = () => {
                         {post.topic.title}<span> </span>
                         <span>
                            | Posted by:<span> </span>
-                          <a className='no-underline' href='#'>{post.user.username}</a>
+                          <Link className='no-underline' to={`user/${post.user?.profile.slug}/`}>{post.user.username}</Link>
                         </span>
                       </span>
                     </a>
                   </div>    
                 ) : (
                   <span className='author-link'>
-                    <a className='no-underline' href='#'>
+                    <Link className='no-underline' to={`user/${post.user?.profile.slug}/`}>
                       <span className='comment-author'>
                         <img className='avatar' src={`${baseUrl}${post.user.profile.avatar}`} />
                         {post.user.username}
                       </span>
-                    </a>
+                    </Link>
                   </span>
                 )}
               </div>

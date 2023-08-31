@@ -2,6 +2,9 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import {useState, useEffect} from 'react';
 import TopicInfo from "./TopicInfo";
+import UserInfo from "./UserInfo";
+import { Link } from 'react-router-dom'
+import CommentForm from "./CommentForm";
 
 
 function PostContent() {
@@ -60,12 +63,12 @@ function PostContent() {
               </div>
             ) : (
               <span className="author-link">
-                <a className="no-underline" href="#">
+                <Link className="no-underline" to={`user/${post.user?.profile.slug}/`}>
                   <span className="comment-author">
                     <img className="avatar" src={`${baseUrl}${post.user?.profile.avatar}`} alt={post.title} />
                     {post.user?.username}
                   </span>
-                </a>
+                </Link>
               </span>
             )}
           </div>
@@ -99,52 +102,68 @@ function PostContent() {
             </div>
           </div>
         </div>
-        {/* <commentForm /> */}
-        <div className="comments-block">
-          {comments.map(comment => (
-            <div className="comment" key={comment.author?.username}>
-              <div className="author-link">
-                <a className="no-underline" href="#">
-                  <span className="comment-author">
-                    <img className="avatar" src={`${baseUrl}${comment.author?.profile.avatar}`} alt={comment.author?.username} />
-                    {comment.author?.username}
-                  </span>
-                </a>
-              </div>     
-              {comment.image ? (
-                <div className="comment-content">
-                  <div className="comment-image">
-                    <img src={`${baseUrl}${comment.image}`} alt={comment.author?.username} />
+        <commentForm />
+        {comments.length > 0 ? (
+          <div className="comments-block">
+            {comments.map(comment => (
+              <div className="comment" key={comment.author?.username}>
+                <div className="author-link">
+                  <a className="no-underline" href="#">
+                    <span className="comment-author">
+                      <img className="avatar" src={`${baseUrl}${comment.author?.profile.avatar}`} alt={comment.author?.username} />
+                      {comment.author?.username}
+                    </span>
+                  </a>
+                </div>     
+                {comment.image ? (
+                  <div className="comment-content">
+                    <div className="comment-text">
+                      {comment.text}
+                    </div>
+                    <div className="comment-image">
+                      <img src={`${baseUrl}${comment.image}`} alt={comment.author?.username} />
+                    </div>    
                   </div>
-                  <div className="comment-text">
-                    {comment.text}
+                ) : (
+                  <div className="comment-content">
+                    <div className="comment-text">
+                      {comment.text}
+                    </div>
                   </div>
+                )}
+                
+                <div className="adds-block">
+                  <p className="adds">Created {comment.created_at}</p>
+                  <a className="adds" href="#">Reply</a>
+                  <button className='menuButton' id='menuButton'>&#8943;</button>
+                    <div id='menu' className='hidden menu'>
+                      <dl>
+                        <dd><a className="no-underline" href="#">Mute {comment.author?.username}</a></dd>
+                      </dl>
+                    </div>
                 </div>
-              ) : (
-                <div className="comment-content">
-                  <div className="comment-text">
-                    {comment.text}
-                  </div>
-                </div>
-              )}
-              
-              <div className="adds-block">
-                <p className="adds">Created {comment.created_at}</p>
-                <a className="adds" href="#">Reply</a>
-                <button className='menuButton' id='menuButton'>&#8943;</button>
-                  <div id='menu' className='hidden menu'>
-                    <dl>
-                      <dd><a className="no-underline" href="#">Mute {comment.author?.username}</a></dd>
-                    </dl>
-                  </div>
-              </div>
-            </div> 
-          ))}
-        </div>
+              </div> 
+            ))}
+          </div>
+        ) : (
+          <div className="comments-block">
+            <p className="white-text">No comments yet</p>
+          </div>
+        )}
+        
       </div>
-
-      <div className="topic-info">
-        <TopicInfo title={post.topic?.title} description={post.topic?.description} image={post.topic?.image} created_at={post.topic?.created_at} />
+      
+      <div className="wrapper-info">
+        {post.topic ? (
+          <div className="topic-info">
+            <TopicInfo topicSlug={post.topic?.slug} title={post.topic?.title} description={post.topic?.description} image={post.topic?.image} created_at={post.topic?.created_at} />
+          </div>
+        ) : (
+          <div className="user-info">
+            <UserInfo profileSlug={post.user?.profile.slug} user={post.user} />
+          </div>
+        )}
+        
       </div>
 
       <div className="left-part"></div>

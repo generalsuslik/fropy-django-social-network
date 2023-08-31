@@ -6,6 +6,7 @@ import Profile from './components/Profile';
 import './style.css';
 import './style_comments.css';
 import './style_topic.css';
+import './style_profile.css';
 import { Routes, Route } from 'react-router-dom';
 
 
@@ -21,7 +22,7 @@ function App() {
         <Routes>
           <Route path='/' Component={Feed} />
           <Route path='/post/:postSlug/' Component={PostContent} />
-          {/* <Route path='/:profileSlug' Component={Profile} /> */}
+          <Route path='/user/:profileSlug' Component={Profile} />
         </Routes>
       </div>
   );

@@ -24,6 +24,15 @@ class PostList(APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+    
+
+class UserPostList(APIView):
+    def get(self, request, slug, format=None):
+        profile = models.Profile.objects.get(slug=slug)
+        posts = models.Post.objects.filter(user=profile.user)
+        serializer = serializers.PostSerializer(posts, many=True)
+        
+        return Response(serializer.data)
 
 
 class PostDetail(APIView):

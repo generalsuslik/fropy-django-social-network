@@ -35,13 +35,9 @@ img{
 }
 
 .wrapper .fropy{
+    width: 45%;
     margin-left: 20%;
     margin-right: 2%;
-}
-
-.wrapper .left-part{
-    background-color: #272727;
-    float: left;
 }
 
 .post{
@@ -56,15 +52,31 @@ img{
 .post-image{
     text-align: center;
     margin: 10px;
+    margin: 0 auto;
+}
+
+.post-image img{
+    height: auto;
+    max-width: 100%;
+}
+
+.post-title{
+    text-align: left;
+    margin-left: 70px;
+    margin-right: 70px;
 }
 
 .post-text{
-    margin-left: 60px;
-    margin-right: 50px;
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-bottom: 10px;
+    text-align: left;
 }
 
 .adds-block{
     margin-top: 10px;
+    margin-left: 50px;
+    text-align: left;
 }
 
 .adds{
@@ -74,8 +86,13 @@ img{
 }
 
 .shapka{
-    margin: 0;
+    margin-left: 50px;
     display: flex;
+    width: 100%;
+}
+
+.line{
+    color: #565454;
 }
 
 #menuButton {
@@ -99,31 +116,56 @@ img{
     z-index: 9999;
 }
 
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+    .container {
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+
+
+@media (min-width: 768px) {
+body {
+    font-size: 16px;
+}
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+}
+
 .hidden {
     display: none;
 }
 
 .author-link{
-    margin-right: 300px;
+    text-align: left;
+    margin-left: 10px;
     color: white;
+    width: 100%;
+    height: auto;
 }
 
 .avatar{
     width: 50px;
-    border-radius: 20%;
+    border-radius: 15%;
+    margin-right: 5px;
 }
 
 .comment-author{
     margin: 5px;
     display: inline-block;
-    /*display: flex;*/
+    width: 100%;
+    height: auto;
 }
 
 .no-underline{
     text-decoration: none;
     color: white;
 }
-
 
 .nav{
     background-color: #272727;

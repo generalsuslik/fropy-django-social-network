@@ -1,8 +1,34 @@
 .comment{
-    border: solid 1px #565454;
-    background-color: #272727;
-    margin-bottom: 30px;
+    /* border: solid 1px #565454;
+    background-color: #272727; */
+    margin: 30px;
     border-radius: 7px;
     position: relative;
     color: white;
+    position: relative;
+    height: fit-content;
+    box-shadow: black;
+    /* max-height: 100px; */
+}
+
+.comments-block{
+    border: solid 1px #565454;
+    background-color: #272727;
+    border-radius: 7px;
+    margin-bottom: 30px;
+    min-height: 120px;
+}
+
+.comment-image{
+    width: 70%;
+    /* position: absolute; */
+}
+
+.comment-text{
+    margin-bottom: 20px;
+    /* position: absolute; */
+}
+
+.commnet-content{
+    position: absolute;
 }

@@ -1,0 +1,11 @@
+.user-info-wrapper{
+    border: solid 1px #565454;
+    background-color: #272727;
+    border-radius: 7px;
+    color: white
+}
+
+.user-info{
+    margin: 20px;
+    display: inline-block;
+}

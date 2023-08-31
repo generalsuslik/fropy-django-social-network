@@ -48,6 +48,7 @@ urlpatterns = [
     path('profiles/', api.ProfileList.as_view()),
     path('profiles/<slug:slug>/', api.ProfileDetail.as_view()),
     path('profiles/user/', api.UserProfile.as_view()),
+    path('profiles/<slug:slug>/posts/', api.UserPostList.as_view()),
     path('topics/', api.TopicList.as_view()),
     path('topics/<slug:slug>/', api.TopicDetail.as_view()),
     path('topics/<slug:slug>/subscriptions/', api.TopicSubscriptionList.as_view()),

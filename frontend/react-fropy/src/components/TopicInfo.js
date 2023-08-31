@@ -7,11 +7,10 @@ const TopicInfo = props => {
     const {title, description, image, created_at} = props;
     const baseUrl = "http://127.0.0.1:8000";
 
-    const [topicSlug] = useParams();
     const [subscriptions, setSubscriptions] = useState([]);
 
     useEffect(() => {
-      axios.get(`http://127.0.0.1:8000/topics/${topicSlug}/subscriptions/`)
+      axios.get(`http://127.0.0.1:8000/topics/${props.topicSlug}/subscriptions/`)
         .then(res => {
           setSubscriptions(res.data);
         })
@@ -19,8 +18,6 @@ const TopicInfo = props => {
           console.log(err);
         })
     }, [])
-
-    console.log(subscriptions);
 
     return (
         <div className="topic-info-wrapper">
@@ -33,14 +30,23 @@ const TopicInfo = props => {
             </div>
             
             <div className="white-text topic-info">
-              <span >
+              <div className="topic-description">
                   {description}
-              </span>
+              </div>
               <br />
               <br />
-              <span>
+              <div className="adds">
                 Created {created_at}
-              </span>
+              </div>
+              <hr className="line"/>
+
+              <div className="topic-members">
+                <p>Members: {subscriptions.length}</p>
+              </div>
+              <hr className="line" />
+
+              <button className="join-button">Join</button>
+
             </div>
           </div>
         </div>
