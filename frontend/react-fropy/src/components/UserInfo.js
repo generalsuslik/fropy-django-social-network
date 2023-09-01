@@ -3,20 +3,7 @@ import { useEffect, useState } from "react";
 
 
 const UserInfo = props => {
-    // const {profileSlug} = props;
     const baseUrl = "http://127.0.0.1:8000";
-
-    // const [profile, setProfile] = useState({})
-
-    // useEffect(() => {
-    //     axios.get(`http://127.0.0.1:8000/profiles/${profileSlug}`)
-    //         .then(res => {
-    //             setProfile(res.data);
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //         })
-    // }, {});
 
     return (
         <div className="topic-info-wrapper">
@@ -30,8 +17,10 @@ const UserInfo = props => {
 
                 <div className="white-text topic-info">
                   {props.user?.info ? (
-                    <div>
-                      {props.user?.profile.info}
+                    <div className="white-text topic-info">
+                      <div className="topic-description">
+                        {props.user?.profile.info}
+                      </div>
                     </div>
                   ) : (
                     <span></span>
@@ -40,6 +29,9 @@ const UserInfo = props => {
                   <div className="adds">
                     First log-in: {props.user?.profile.created_at}
                   </div>
+                  <hr className="line" />
+
+                  <button className="join-button">Follow</button>
                 </div>
             </div>
         </div>

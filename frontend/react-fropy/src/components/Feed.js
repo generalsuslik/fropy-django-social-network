@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'
 import processPosts from '../scripts.js'
 
+import NewPostForm from './PostForm.js';
+
 
 const Feed = () => {
     const [posts, setPosts] = useState([])
@@ -23,12 +25,15 @@ const Feed = () => {
 
     return (
         <div className='fropy'>
+          {/* <div className='new-post-link-wrapper'>
+            <Link className='new-post-link no-underline' to={'new-post/'}>Create new post</Link>
+          </div> */}
           {posts.map(post => (
             <div className='post' key={post.id}>
               <div className='shapka'>
                 {post.topic ? (
                   <div className='author-link'>
-                    <a href='#' className='no-underline'>
+                    <Link to={`topics/${post.topic?.slug}`} className='no-underline'>
                       <span className='comment-author'>
                         <img className='avatar' src={`${baseUrl}${post.topic.image}`} alt={post.topic.title} />
                         {post.topic.title}<span> </span>
@@ -37,7 +42,7 @@ const Feed = () => {
                           <Link className='no-underline' to={`user/${post.user?.profile.slug}/`}>{post.user.username}</Link>
                         </span>
                       </span>
-                    </a>
+                    </Link>
                   </div>    
                 ) : (
                   <span className='author-link'>

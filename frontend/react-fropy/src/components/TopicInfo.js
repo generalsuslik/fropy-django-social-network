@@ -1,16 +1,27 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 
 const TopicInfo = props => {
-    const {title, description, image, created_at} = props;
+    const {topicSlug} = props;
     const baseUrl = "http://127.0.0.1:8000";
 
+    const [topic, setTopic] = useState({});
     const [subscriptions, setSubscriptions] = useState([]);
 
     useEffect(() => {
-      axios.get(`http://127.0.0.1:8000/topics/${props.topicSlug}/subscriptions/`)
+      axios.get(`http://127.0.0.1:8000/topics/${topicSlug}/`)
+        .then(res => {
+          setTopic(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }, [])
+
+    useEffect(() => {
+      axios.get(`http://127.0.0.1:8000/topics/${topicSlug}/subscriptions/`)
         .then(res => {
           setSubscriptions(res.data);
         })
@@ -18,30 +29,33 @@ const TopicInfo = props => {
           console.log(err);
         })
     }, [])
+    
+    const members = subscriptions.length;
+    console.log('topic - ', topic);
 
     return (
         <div className="topic-info-wrapper">
           <div className="topic-info-block">
             <div className="shapka">
-              <a className="no-underline" href="#">
-                  <img className="avatar" src={`${baseUrl}${image}`} />
-                  <h2 className="topic-title">{title}</h2>
-              </a>
+              <Link className="no-underline" to={`http://localhost:3000/topics/${topic?.slug}`}>
+                  <img className="avatar" src={`${baseUrl}${topic?.image}`} />
+                  <h2 className="topic-title">{topic?.title}</h2>
+              </Link>
             </div>
             
             <div className="white-text topic-info">
               <div className="topic-description">
-                  {description}
+                  {topic?.description}
               </div>
               <br />
               <br />
               <div className="adds">
-                Created {created_at}
+                Created {topic?.created_at}
               </div>
               <hr className="line"/>
 
               <div className="topic-members">
-                <p>Members: {subscriptions.length}</p>
+                <p>Members: {members}</p>
               </div>
               <hr className="line" />
 

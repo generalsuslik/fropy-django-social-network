@@ -182,6 +182,15 @@ class TopicList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+
+class TopicPostsList(APIView):
+    def get(self, request, slug, format=None):
+        topic = models.Topic.objects.get(slug=slug)
+        posts = models.Post.objects.filter(topic=topic).order_by('-created_at')
+        serializer = serializers.PostSerializer(posts, many=True)
+        
+        return Response(serializer.data)
+    
     
 class TopicDetail(APIView):
     def get_object(self, slug):
