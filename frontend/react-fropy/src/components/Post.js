@@ -44,14 +44,14 @@ function PostContent() {
                       {post.topic.title}<span> </span>
                       <span>
                         | Posted by:  
-                        <a className="no-underline" href="#">{post.user?.username}</a>
+                        <Link className="no-underline" to={`http://localhost:3000/user/${post.user?.profile.slug}`}>{post.user?.username}</Link>
                       </span>
                     </span>
                   </a>
                 </div>
               ) : (
                 <span className="author-link">
-                  <Link className="no-underline" to={`user/${post.user?.profile.slug}/`}>
+                  <Link className="no-underline" to={`http://localhost:3000/user/${post.user?.profile.slug}/`}>
                     <span className="comment-author">
                       <img className="avatar" src={`${baseUrl}${post.user?.profile.avatar}`} alt={post.title} />
                       {post.user?.username}
@@ -101,7 +101,7 @@ function PostContent() {
             </div>
           ) : (
             <div className="topic-info">
-              <UserInfo profileSlug={post.user?.profile.slug} user={post.user} />
+              <UserInfo profileSlug={post.user?.profile.slug}/>
             </div>
           )}
           

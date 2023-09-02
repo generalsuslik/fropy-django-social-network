@@ -45,7 +45,7 @@ const Topic = () => {
                         <div className="post" key={post.id}>
                             <div className="shapka">
                               <span className='author-link'>
-                                <Link className='no-underline' to={`user/${post.user?.profile.slug}/`}>
+                                <Link className='no-underline' to={`http://localhost:3000/user/${post.user?.profile.slug}/`}>
                                   <span className='comment-author'>
                                     <img className='avatar' src={`${baseUrl}${post.user.profile.avatar}`} />
                                     {post.user.username}

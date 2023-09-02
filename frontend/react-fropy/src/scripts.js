@@ -10,10 +10,9 @@ function processPosts(){
 
     const postContent = postElement.querySelector(".post-content");
     truncatePost(postContent);
+    addMenuButton(postElement);
     // addColorToNumber(postElement);
     // changeButtonColor(postElement);
-
-    addMenuButton(postElement);
   });
 }
 
