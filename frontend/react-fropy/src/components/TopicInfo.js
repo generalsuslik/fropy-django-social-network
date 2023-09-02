@@ -31,7 +31,6 @@ const TopicInfo = props => {
     }, [])
     
     const members = subscriptions.length;
-    console.log('topic - ', topic);
 
     return (
         <div className="topic-info-wrapper">

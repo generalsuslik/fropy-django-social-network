@@ -1,6 +1,4 @@
 .comment{
-    /* border: solid 1px #565454;
-    background-color: #272727; */
     margin: 30px;
     border-radius: 7px;
     position: relative;
@@ -8,7 +6,14 @@
     position: relative;
     height: fit-content;
     box-shadow: black;
-    /* max-height: 100px; */
+}
+
+.commnet-consstent{
+    position: absolute;
+}
+
+.comment .adds-block{
+    margin: 0;
 }
 
 .comments-block{
@@ -26,9 +31,6 @@
 
 .comment-text{
     margin-bottom: 20px;
-    /* position: absolute; */
-}
-
-.commnet-content{
-    position: absolute;
+    margin-left: 20px;
+    text-align: left;
 }

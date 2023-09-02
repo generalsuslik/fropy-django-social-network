@@ -10,7 +10,6 @@ urlpatterns = [
     path('', api.PostList.as_view()),
     path('post/<slug:slug>/', api.PostDetail.as_view()),
     path('comments/', api.CommentsList.as_view()),
-    path('post/<slug:post_slug>/comments/', api.PostCommentsList.as_view()),
     path('comments/<int:user_id>/<int:post_id>/', api.CommentDetail.as_view()),
     path('users/', api.UserList.as_view()),
     path('users/<int:pk>/', api.UserDetail.as_view()),

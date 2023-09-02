@@ -81,6 +81,7 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/%Y/%m/', null=True, blank=True)
     text = models.TextField(blank=True)
+    # parent_comment = models.ForeignKey(self, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
