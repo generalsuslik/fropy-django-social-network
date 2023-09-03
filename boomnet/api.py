@@ -145,10 +145,29 @@ class UserView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (SessionAuthentication,)
 
+    def get_object(self, request):
+        try:
+            return User.objects.get(pk=request.user.id)
+        except User.DoesNotExist:
+            raise Http404
+
     def get(self, request):
-        serializer = serializers.UserSerializer(request.user)
-        
-        return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+        user = self.get_object(request)
+        serializer = serializers.UserSerializer(user)
+        return Response(serializer.data)
+
+    def put(self, request):
+        user = self.get_object(request)
+        serializer = serializers.UserSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        user = self.get_object(request)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
     
     
 class ProfileList(APIView):

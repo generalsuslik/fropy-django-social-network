@@ -60,12 +60,14 @@ img{
 
 .post-title{
     text-align: left;
-    /* width: auto; */
+    width: 100%;
     display: inline-block;
-    margin-left: 70px;
+    /* margin-left: 70px; */
+    margin-left: 7%;
 }
 
 .post-text{
+    width: 100%;
     margin-left: 70px;
     margin-right: 70px;
     margin-bottom: 10px;
@@ -168,7 +170,7 @@ img{
 
 .author-link{
     text-align: left;
-    margin-left: 10px;
+    margin-left: 1%;
     color: white;
     width: 100%;
     height: auto;

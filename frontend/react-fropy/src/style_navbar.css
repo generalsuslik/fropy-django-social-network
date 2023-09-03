@@ -1,5 +1,6 @@
 .navbar{
-    margin-bottom: 10px;
+    width: 100%;
+    border-bottom: 1px solid #565454;
 }
 
 .navbar-link-block{
