@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Card from 'react-bootstrap/Card';
 
 
 const UserInfo = props => {
@@ -20,7 +21,7 @@ const UserInfo = props => {
     })
 
     return (
-        <div className="topic-info-wrapper">
+        <Card data-bs-theme="dark" className="topic-info-wrapper">
             <div className="topic-info-block">
                 <div className="shapka">
                   <Link className="no-underline" to={`http://localhost:3000/user/${profile?.slug}/`}>
@@ -48,7 +49,7 @@ const UserInfo = props => {
                   <button className="join-button">Follow</button>
                 </div>
             </div>
-        </div>
+        </Card>
     );
 }
 

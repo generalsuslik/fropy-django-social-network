@@ -2,12 +2,14 @@ import {useState, useEffect} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import processPosts from '../scripts.js'
+import Card from 'react-bootstrap/Card';
 
 import NewPostForm from './PostForm.js';
 
 
 const Feed = () => {
     const [posts, setPosts] = useState([]);
+    const [votes, setVotes] = useState([]);
     
     useEffect(() => {
       axios.get("http://localhost:8000/")
@@ -30,7 +32,7 @@ const Feed = () => {
               <Link className='new-post-link no-underline' to={'new-post/'}>Create new post</Link>
             </div> */}
             {posts.map(post => (
-              <div className='post' key={post.id}>
+              <Card data-bs-theme="dark" className='post' key={post.id}>
                 <div className='shapka'>
                   {post.topic ? (
                     <div className='author-link'>
@@ -56,20 +58,23 @@ const Feed = () => {
                     </span>
                   )}
                 </div>
-                {processPosts()}
-                <Link to={`/post/${post.slug}/`} className='no-underline'>
-                  <div className='post-content'>
-                    <div className='post-title'>
-                      <h2>{post.title}</h2>
+                
+                <div className='post-content-link'>
+                  {processPosts()}
+                  <Link to={`/post/${post.slug}/`} className='no-underline'>
+                    <div className='post-content'>
+                      <div className='post-title'>
+                        <h2>{post.title}</h2>
+                      </div>
+                      <div className='post-text'>
+                        {post.text}
+                      </div>
+                      <div className='post-image'>
+                        <img src={`${baseUrl}${post.image}`} />
+                      </div>
                     </div>
-                    <div className='post-text'>
-                      {post.text}
-                    </div>
-                    <div className='post-image'>
-                      <img src={`${baseUrl}${post.image}`} />
-                    </div>
-                  </div>
-                </Link>
+                  </Link>
+                </div>
 
                 <div className='adds-block'>
                   <p className='adds'>Created {post.created_at}</p>
@@ -88,7 +93,7 @@ const Feed = () => {
                     </dl>
                   </div>
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
         </div>

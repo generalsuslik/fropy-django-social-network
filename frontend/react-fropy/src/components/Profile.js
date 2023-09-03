@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import Card from 'react-bootstrap/Card';
+
 import UserInfo from "./UserInfo";
 import processPosts from "../scripts";
 
@@ -35,7 +37,7 @@ const Profile = () => {
       <div className="wrapper">
         <div className="fropy">
           {posts.map(post => (
-            <div className="post" key={post.id}>
+            <Card data-bs-theme="dark" className="post" key={post.id}>
               {post.topic ? (
                 <div className="shapka">
                   <div className="author-link">
@@ -52,7 +54,7 @@ const Profile = () => {
               )}
 
               {processPosts()}
-              <Link to={`http://localhost/post/${post.slug}`} className="no-underline">
+              <Link to={`http://localhost:3000/post/${post.slug}/`} className="no-underline">
                 <div className="post-content">
                   <div className="post-title">
                     <h2>{post.title}</h2>
@@ -83,7 +85,7 @@ const Profile = () => {
                   </dl>
                 </div>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
         <div className="topic-info">

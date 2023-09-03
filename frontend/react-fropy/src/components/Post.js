@@ -1,11 +1,14 @@
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import {useState, useEffect} from 'react';
-import TopicInfo from "./TopicInfo";
-import UserInfo from "./UserInfo";
 import { Link } from 'react-router-dom'
 import PostComments from "./PostComments";
+import Card from 'react-bootstrap/Card';
+
 import CommentForm from "./CommentForm";
+import TopicInfo from "./TopicInfo";
+import UserInfo from "./UserInfo";
+
 
 
 function PostContent() {
@@ -34,7 +37,7 @@ function PostContent() {
     <div className="ultra-wrapper">
       <div className="wrapper">
         <div className="fropy">
-          <div className="post">
+          <Card data-bs-theme="dark" className="post">
             <div className="shapka">
               {post.topic ? (
                 <div className="author-link">
@@ -69,7 +72,9 @@ function PostContent() {
                 {post.text}
               </div>
               <div className='post-image'>
-                <img src={`${baseUrl}${post.image}`} />
+                <Link className="no-underline" target="_blank" to={`${baseUrl}${post.image}`}>
+                  <img src={`${baseUrl}${post.image}`} />
+                </Link>
               </div>
             </div>
 
@@ -89,7 +94,7 @@ function PostContent() {
                 </dl>
               </div>
             </div>
-          </div>
+          </Card>
           {/* <commentForm /> */}
           <PostComments />
         </div>

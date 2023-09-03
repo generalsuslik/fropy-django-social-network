@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import Card from 'react-bootstrap/Card';
 
 
 const TopicInfo = props => {
@@ -33,8 +34,8 @@ const TopicInfo = props => {
     const members = subscriptions.length;
 
     return (
-        <div className="topic-info-wrapper">
-          <div className="topic-info-block">
+        <Card data-bs-theme="dark" className="topic-info-wrapper">
+          <div data-bs-theme="dark" className="topic-info-block">
             <div className="shapka">
               <Link className="no-underline" to={`http://localhost:3000/topics/${topic?.slug}`}>
                   <img className="avatar" src={`${baseUrl}${topic?.image}`} />
@@ -62,7 +63,7 @@ const TopicInfo = props => {
 
             </div>
           </div>
-        </div>
+        </Card>
     );
 }
 

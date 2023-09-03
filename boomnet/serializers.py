@@ -1,5 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model, authenticate
+from django.utils.text import slugify
+from django.core.exceptions import ValidationError
 
 from . import models
 
@@ -50,7 +53,6 @@ class PostSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     author = UserSerializer()
     post = PostSerializer()
-    # image = serializers.SerializerMethodField('get_image_url')
     
     class Meta:
         model = models.Comment
@@ -67,3 +69,41 @@ class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Subscription
         fields = "__all__"
+        
+
+class VoteSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    post = PostSerializer()
+    
+    class Meta:
+        model = models.Vote
+        fields = '__all__'
+        
+        
+class UserRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"
+        
+    def create(self, clean_data):
+        user_obj = User.objects.create_user(email=clean_data['email'], password=clean_data['password'])
+        user_obj.username = clean_data.username
+        user_obj.save()
+        profile_obj = models.Profile.objects.create(user=user_obj)
+        profile_obj.slug = slugify(user_obj.username)
+        profile_obj.save()
+        
+        return user_obj
+    
+
+class UserLoginSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
+    
+    def check_user(self, clean_data):
+        user = authenticate(email=clean_data['email'], password=clean_data['password'])
+        if not user:
+            raise ValidationError('user not found')
+        
+        return user
+        

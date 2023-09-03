@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import Card from 'react-bootstrap/Card';
 
 
 const PostComments = () => {
@@ -22,7 +23,7 @@ const PostComments = () => {
     console.log('comments -> ', comments, comments.length)
 
     return (
-        <div className="comments-block">
+        <Card data-bs-theme="dark" className="comments-block">
             {comments.filter(comment => comment.post?.slug === postSlug)
                 .map(comment => (
                     <div className="comment">
@@ -64,7 +65,7 @@ const PostComments = () => {
                         </div>
                     </div>
                 ))}
-        </div>
+        </Card>
     );
 }
 
