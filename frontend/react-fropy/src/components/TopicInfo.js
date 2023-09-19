@@ -59,7 +59,9 @@ const TopicInfo = props => {
               </div>
               <hr className="line" />
 
-              <button className="join-button">Join</button>
+              <div className="button-container">
+                <button className="join-button">Join</button>
+              </div>
 
             </div>
           </div>

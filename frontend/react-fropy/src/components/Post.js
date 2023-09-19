@@ -106,7 +106,7 @@ function PostContent() {
             </div>
           ) : (
             <div className="topic-info">
-              <UserInfo profileSlug={post.user?.profile.slug}/>
+              {/* <UserInfo profileSlug={post.user?.profile.slug}/> */}
             </div>
           )}
           

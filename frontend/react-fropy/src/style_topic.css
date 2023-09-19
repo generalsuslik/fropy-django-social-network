@@ -49,9 +49,18 @@
     text-align: left;
 }
 
+.button-container{
+    margin-bottom: 3%;
+}
+
 .join-button{
     width: 100%;
+    border: none;
     border-radius: 7px;
     background-color: orangered;
     color: white;
+}
+
+.join-button:hover{
+    background-color: rgb(252, 98, 42);
 }

@@ -4,10 +4,14 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from . import views
 from . import api
 
+from rest_framework_simplejwt.views import TokenRefreshView
+
 
 app_name = 'boomnet'
 urlpatterns = [
     path('', api.PostList.as_view()),
+    path('token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('post/<slug:slug>/', api.PostDetail.as_view()),
     path('comments/', api.CommentsList.as_view()),
     path('comments/<int:user_id>/<int:post_id>/', api.CommentDetail.as_view()),

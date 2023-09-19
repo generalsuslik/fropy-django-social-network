@@ -45,8 +45,10 @@ const UserInfo = props => {
                     First log-in: {profile?.created_at}
                   </div>
                   <hr className="line" />
-
-                  <button className="join-button">Follow</button>
+                  
+                  <div className="button-container">
+                    <button className="join-button">Follow</button>
+                  </div>
                 </div>
             </div>
         </Card>

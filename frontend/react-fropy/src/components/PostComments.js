@@ -6,7 +6,7 @@ import Card from 'react-bootstrap/Card';
 
 const PostComments = () => {
     const {postSlug} = useParams();
-    const [comments, setComments] = useState([]);
+    let [comments, setComments] = useState([]);
     console.log(postSlug)
     useEffect(() => {
         axios.get("http://127.0.0.1:8000/comments/")
@@ -20,6 +20,7 @@ const PostComments = () => {
 
     const baseUrl = "http://127.0.0.1:8000";
 
+    comments = comments.filter(comment => comment.post?.slug === postSlug)
     console.log('comments -> ', comments, comments.length)
 
     return (
@@ -63,6 +64,7 @@ const PostComments = () => {
                                 </div>
                             </div>
                         </div>
+                        <hr className="white-text" />
                     </div>
                 ))}
         </Card>

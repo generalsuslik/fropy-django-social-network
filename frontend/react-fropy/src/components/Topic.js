@@ -9,7 +9,7 @@ import TopicInfo from "./TopicInfo";
 
 const Topic = () => {
     const { topicSlug } = useParams();
-    const [topic, setTopic] = useState({});
+    const [topic, setTopic] = useState([]);
     const [posts, setPosts] = useState([])
     
     useEffect(() => {
@@ -50,7 +50,7 @@ const Topic = () => {
                                 <Link className='no-underline' to={`http://localhost:3000/user/${post.user?.profile.slug}/`}>
                                   <span className='comment-author'>
                                     <img className='avatar' src={`${baseUrl}${post.user.profile.avatar}`} />
-                                    {post.user.username}
+                                    {post.user?.username}
                                   </span>
                                 </Link>
                               </span>

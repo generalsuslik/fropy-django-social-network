@@ -8,36 +8,36 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+import { useContext } from 'react'
+
 import {useState, useEffect} from 'react';
-import axios from "axios";
+import axios, { all } from "axios";
+
+import registration from '../utils/registration';
 
 
 function NavbarComponent() {
 
-  const [currentUser, setCurrentUser] = useState();
   const [subscriptions, setSubscriptions] = useState([]);
+  const currentUser = registration.getCurrentUser();
 
-  useEffect(() => {
-    axios.get('http://127.0.0.1:8000/user-view/')
-      .then(response => {
-        setCurrentUser(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
+  console.log(currentUser);
 
-  console.log(`currentUser -> ${currentUser}`);
+  const handleLogout = () => {
+    registration.logout();
+  }
 
-  useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/users/${currentUser?.id}/subscriptions/`)
-      .then(res => {
-        setSubscriptions(res.data);
-      })
-      .catch(err => {
-        console.log(`Error in navbar during getting subscriptions -> ${err}`)
-      })
-  }, [])
+  console.log(`currentUser -> ${currentUser.username}`);
+
+  // useEffect(() => {
+  //   axios.get(`http://127.0.0.1:8000/users/${currentUser.id}/subscriptions/`)
+  //     .then(res => {
+  //       setSubscriptions(res.data);
+  //     })
+  //     .catch(err => {
+  //       console.log(`Error in navbar during getting subscriptions -> ${err}`)
+  //     })
+  // }, [])
 
   return (
     <Navbar collapseOnSelect expand="lg" data-bs-theme="dark" className="bg-body-tertiary fixed-top">
@@ -51,7 +51,7 @@ function NavbarComponent() {
             {currentUser ? (
               <NavDropdown title="Topics" id="collasible-nav-dropdown">
                 {subscriptions.map(subscription => (
-                  <NavDropdown.Item href='#'>{subscription.topic.title}</NavDropdown.Item>
+                  <NavDropdown.Item href="#">{subscription.topic.title}</NavDropdown.Item>
                 ))}
                 <NavDropdown.Divider />
                 <NavDropdown.Item href='#'>Create new topic</NavDropdown.Item>
@@ -77,11 +77,20 @@ function NavbarComponent() {
             </Row>
           </Form>
           {currentUser ? (
-            <div><h2 className='white-text'>asdasd</h2></div>
+            <Nav className='navbar-link-block'>
+              <Nav.Link className='navbar-link' href='http://localhost:3000/log-in/' onClick={handleLogout}>Log out</Nav.Link>
+              <NavDropdown title={currentUser?.username}>
+                <NavDropdown.Item href={`http://127.0.0.1:3000/user/admin/`}>Profile</NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+            // <div>
+            //   <p onClick={logoutUser}>Logout</p>
+            //   <p className='white-text'>Hello, {currentUser?.username}</p>
+            // </div>
           ) : (
             <Nav className='navbar-link-block'>
-              <Nav.Link className='navbar-link' href="registration">Sign up</Nav.Link>
-              <Nav.Link eventKey={2} href="#">Log in</Nav.Link>
+              <Nav.Link className='navbar-link' href="http://localhost:3000/sign-up/">Sign up</Nav.Link>
+              <Nav.Link className='navbar-link' href="http://localhost:3000/log-in/">Log in</Nav.Link>
             </Nav>
           )}
           

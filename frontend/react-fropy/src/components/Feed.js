@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'
 import processPosts from '../scripts.js'
 import Card from 'react-bootstrap/Card';
+import { useContext } from 'react'
 
 import NewPostForm from './PostForm.js';
 
@@ -27,6 +28,7 @@ const Feed = () => {
 
     return (
         <div className='wrapper'>
+          {console.log()}
           <div className='fropy'>
             {/* <div className='new-post-link-wrapper'>
               <Link className='new-post-link no-underline' to={'new-post/'}>Create new post</Link>
@@ -36,7 +38,7 @@ const Feed = () => {
                 <div className='shapka'>
                   {post.topic ? (
                     <div className='author-link'>
-                      <Link to={`topics/${post.topic?.slug}`} className='no-underline'>
+                      <Link to={`topics/${post.topic?.slug}/`} className='no-underline'>
                         <span className='comment-author'>
                           <img className='avatar' src={`${baseUrl}${post.topic.image}`} alt={post.topic.title} />
                           {post.topic.title}<span> </span>

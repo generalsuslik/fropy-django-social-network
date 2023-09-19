@@ -7,6 +7,15 @@ from django.core.exceptions import ValidationError
 from . import models
 
 
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data['username'] = self.user.username
+        data['email'] = self.user.email
+        return data
+
 class DummyUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
