@@ -2,6 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
+import Button from "react-bootstrap/esm/Button";
+
+import registration from "../utils/registration";
 
 
 const TopicInfo = props => {
@@ -32,6 +35,16 @@ const TopicInfo = props => {
     }, [])
     
     const members = subscriptions.length;
+    const currentUser = registration.getCurrentUser();
+
+    let userSubscribedOnCurrentTopic = false;
+    
+    for (let i = 0; i < subscriptions.length; i++){
+      if (subscriptions[i]?.user.username === currentUser.username){
+        userSubscribedOnCurrentTopic = true;
+        break;
+      }
+    }
 
     return (
         <Card data-bs-theme="dark" className="topic-info-wrapper">
@@ -60,7 +73,15 @@ const TopicInfo = props => {
               <hr className="line" />
 
               <div className="button-container">
-                <button className="join-button">Join</button>
+                {userSubscribedOnCurrentTopic ? (  
+                  <Button data-bs-theme="dark" className="leave-button">
+                    <span>Joined</span>
+                  </Button>
+                ) : (
+                  <Button className="join-button">
+                    <span>Join</span>
+                  </Button>
+                )} 
               </div>
 
             </div>

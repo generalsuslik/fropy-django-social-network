@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useState, useEffect } from "react";
 
 
 const apiUrl = "http://127.0.0.1:8000/";
@@ -26,8 +27,9 @@ const logout = () => {
 const getCurrentUser = () => {
     if(!localStorage.getItem('user')){
         console.log('user = null');
-        return false;
+        return null;
     }
+
     console.log('getting current user', localStorage.getItem('user'));
     return JSON.parse(localStorage.getItem('user'));
 }

@@ -3,6 +3,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from . import views
 from . import api
+from . import registration
 
 from rest_framework_simplejwt.views import TokenRefreshView
 
@@ -18,7 +19,8 @@ urlpatterns = [
     path('users/', api.UserList.as_view()),
     path('users/<int:pk>/', api.UserDetail.as_view()),
     path('users/<int:pk>/subscriptions/', api.UserSubscriptionList.as_view()),
-    path('register/', api.UserRegister.as_view(), name='register'),
+    # path('register/', api.UserRegister.as_view(), name='register'),
+    path('register/', registration.sign_up, name='sign_up'),
     path('log-in/', api.UserLogin.as_view(), name='login'),
     path('log-out/', api.UserLogout.as_view(), name='logout'),
     path('user-view/', api.UserView.as_view(), name='user_view'),

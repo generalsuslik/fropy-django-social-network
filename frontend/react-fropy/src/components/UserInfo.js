@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
 
+import registration from "../utils/registration";
+
 
 const UserInfo = props => {
     const baseUrl = "http://127.0.0.1:8000";

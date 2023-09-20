@@ -64,3 +64,20 @@
 .join-button:hover{
     background-color: rgb(252, 98, 42);
 }
+
+.leave-button{
+    width: 100%;
+    border: none;
+    border-radius: 7px;
+    background-color: none;
+    color: white;
+}
+
+.leave-button:hover span{
+    display: none;
+}
+
+.leave-button:hover:before{
+    content: "Leave";
+}
+

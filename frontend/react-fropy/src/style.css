@@ -30,6 +30,11 @@ img{
     background-color: #666;
 }
 
+.post:hover{
+    border: solid 1px #808080;
+    border-radius: 8px;
+}
+
 .post{
     border: solid 1px #565454;
     background-color: #272727;

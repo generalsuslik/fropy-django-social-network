@@ -15,6 +15,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['username'] = self.user.username
         data['email'] = self.user.email
         return data
+    
 
 class DummyUserSerializer(serializers.ModelSerializer):
     class Meta:

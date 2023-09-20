@@ -7,6 +7,7 @@ import NewPostForm from './components/PostForm';
 import Topic from './components/Topic';
 import NavbarComponent from './components/Navbar';
 import Login from './components/Login';
+import SignUp from './components/SignUp';
 
 import './style.css';
 import './style_comments.css';
@@ -40,18 +41,21 @@ function App() {
         <br/>
         <Routes>
           <Route path='/' element={<Feed />} />
-          <Route path='post'>
+          <Route path='/post'>
             <Route path=':postSlug/' Component={PostContent} />
           </Route>
 
-          <Route path='topics'>
+          <Route path='/topics'>
             <Route path=':topicSlug/' Component={Topic} />
           </Route>
           
-          <Route path='/user/:profileSlug/' Component={Profile} />
+          <Route path='user'>
+            <Route path=':profileSlug/' Component={Profile} />
+          </Route>
+
           <Route path='/new-post/' Component={NewPostForm} />
-          {/* <Route path='/registration/' Component={Login} /> */}
           <Route path='/log-in/' Component={Login} />
+          <Route path='/sign-up/' Component={SignUp} />
         </Routes>
       </div>
   );

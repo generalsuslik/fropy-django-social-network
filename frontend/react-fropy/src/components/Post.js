@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom'
 import PostComments from "./PostComments";
 import Card from 'react-bootstrap/Card';
@@ -26,12 +26,21 @@ function PostContent() {
       });
   }, []);
 
+  const baseUrl = "http://127.0.0.1:8000";
+
   if (!post){
     return <div><h1>404</h1></div>
   }
 
-
-  const baseUrl = "http://127.0.0.1:8000";
+  if (isLoading){
+    return (
+      <div>
+        <h1 className="white-text">
+          Loading...
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <div className="ultra-wrapper">
