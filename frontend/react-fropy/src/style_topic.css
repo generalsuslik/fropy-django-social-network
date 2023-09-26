@@ -1,9 +1,17 @@
-.topic-info-wrapper{
-    border: solid 1px #565454;
-    background-color: #272727;
-    border-radius: 7px;
-    color: white;
-    width: 300px;
+@media (max-width: 768px){
+    .topic-info-wrapper{
+        display:  none;
+    }
+}
+
+@media (min-width: 768px){
+    .topic-info-wrapper{
+        border: solid 1px #565454;
+        background-color: #272727;
+        border-radius: 7px;
+        color: white;
+        width: 300px;
+    }
 }
 
 .topic-info-block{
@@ -55,14 +63,14 @@
 
 .join-button{
     width: 100%;
-    border: none;
+    border: solid 1px #3a3a3a !important;
     border-radius: 7px;
-    background-color: orangered;
+    background-color: orangered !important;
     color: white;
 }
 
 .join-button:hover{
-    background-color: rgb(252, 98, 42);
+    background-color: rgba(255, 69, 2, 0.651) !important;
 }
 
 .leave-button{

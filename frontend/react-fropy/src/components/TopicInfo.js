@@ -6,6 +6,10 @@ import Button from "react-bootstrap/esm/Button";
 
 import registration from "../utils/registration";
 
+import subscription from "../utils/subscription";
+
+import '../style_topic.css'
+
 
 const TopicInfo = props => {
     const {topicSlug} = props;
@@ -44,6 +48,14 @@ const TopicInfo = props => {
         userSubscribedOnCurrentTopic = true;
         break;
       }
+    }
+
+    const handleJoin = (topicSlug) => {
+      subscription.JoinTopic(topicSlug);
+    }
+
+    const handleLeave = (topicSlug) => {
+      subscription.LeaveTopic(topicSlug);
     }
 
     return (

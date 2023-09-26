@@ -37,16 +37,20 @@ function NavbarComponent() {
   }, [])
 
   return (
-    <Navbar collapseOnSelect expand="lg" data-bs-theme="dark" className="bg-body-tertiary fixed-top">
-      <Container fluid className='navbar-container'>
+    <Navbar expand="lg" data-bs-theme="dark" className="bg-body-tertiary navbar fixed-top">
+      <Container fluid>
         <Navbar.Brand href="/">Fropy</Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
+        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll" className='navbar-collapsed'>
+          <Nav
+            className="me-auto my-2 my-lg-0"
+            style={{ maxHeight: '100px' }}
+            navbarScroll
+          >
+            <Nav.Link href="#action1">Home</Nav.Link>
+            <Nav.Link href="#action2">Link</Nav.Link>
             {currentUser ? (
-              <NavDropdown title="Topics" id="collasible-nav-dropdown">
+              <NavDropdown className='navbar-topics-list' title="Topics" id="collasible-nav-dropdown">
                 {subscriptions.map(subscription => (
                   <NavDropdown.Item href={`http://localhost:3000/topics/${subscription.topic.slug}/`}>{subscription.topic.title}</NavDropdown.Item>
                 ))}
@@ -57,35 +61,38 @@ function NavbarComponent() {
               <span></span>
             )}
           </Nav>
-
-          <Form inline>
-            <Row>
-              <Col xs="auto">
-                <div className='search-bar'>
-                  <Form.Control 
-                    type="text"
-                    placeholder="Search"
-                    className="form-control mr-sm-2"
-                    style={{width:"100%"}}
-                  />
-                </div>
-              </Col>
-            </Row>
+          <Form className="d-flex">
+            <Form.Control
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+            />
           </Form>
+
           {currentUser ? (
-            <Nav className='navbar-link-block'>
-              <Nav.Link className='navbar-link' href='http://localhost:3000/log-in/' onClick={handleLogout}>Log out</Nav.Link>
-              <NavDropdown title={currentUser?.username}>
-                <NavDropdown.Item href={`http://localhost:3000/user/pythonist/`}>Profile</NavDropdown.Item>
+            <Nav className='nav-end navbar-link-block'>
+              {/* <Nav.Link className='navbar-link' href='http://localhost:3000/log-in/' onClick={handleLogout}>Log out</Nav.Link> */}
+              <NavDropdown className='user-dropdown' title={currentUser?.username}>
+                <div className='user-dropdown-box'>
+                <NavDropdown.Item className='user-dropdown-item' href={`http://localhost:3000/user/pythonist/`}>Profile</NavDropdown.Item>
+                <NavDropdown.Item className='user-dropdown-item' href='#'>Settings</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item className='user-dropdown-item' href='#create-topic'>Create topic</NavDropdown.Item>
+                <NavDropdown.Item className='user-dropdown-item' href='#best-topics/'>Best topics</NavDropdown.Item>
+                <NavDropdown.Item className='user-dropdown-item' href='#help/'>Help</NavDropdown.Item>
+                <NavDropdown.Item className='user-dropdown-item' href='#help/'>About Fropy</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item className='user-dropdown-item' href='http://localhost:3000/log-in/' onClick={handleLogout}>Log out</NavDropdown.Item>
+                </div>
               </NavDropdown>
             </Nav>
           ) : (
-            <Nav className='navbar-link-block'>
+            <Nav className='nav-end navbar-link-block'>
               <Nav.Link className='navbar-link' href="http://localhost:3000/sign-up/">Sign up</Nav.Link>
               <Nav.Link className='navbar-link' href="http://localhost:3000/log-in/">Log in</Nav.Link>
             </Nav>
           )}
-          
         </Navbar.Collapse>
       </Container>
     </Navbar>

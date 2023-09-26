@@ -12,7 +12,6 @@ const login = (username, password) => {
     .then(res => {
         if(res.data.access){
             localStorage.setItem('user', JSON.stringify(res.data));
-            console.log("Login success", res.data);
         }
         
         return res.data;
@@ -30,7 +29,6 @@ const getCurrentUser = () => {
         return null;
     }
 
-    console.log('getting current user', localStorage.getItem('user'));
     return JSON.parse(localStorage.getItem('user'));
 }
 

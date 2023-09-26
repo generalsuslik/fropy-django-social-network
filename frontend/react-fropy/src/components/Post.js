@@ -32,16 +32,6 @@ function PostContent() {
     return <div><h1>404</h1></div>
   }
 
-  if (isLoading){
-    return (
-      <div>
-        <h1 className="white-text">
-          Loading...
-        </h1>
-      </div>
-    );
-  }
-
   return (
     <div className="ultra-wrapper">
       <div className="wrapper">
