@@ -5,13 +5,15 @@ import processPosts from '../scripts.js'
 import Card from 'react-bootstrap/Card';
 import { useContext } from 'react'
 
-import NewPostForm from './PostForm.js';
+import LoadingSpinner from './LoadingSpinner.jsx';
+
+import NewPostForm from './PostForm.jsx';
 
 
 const Feed = () => {
     const [posts, setPosts] = useState([]);
     const [votes, setVotes] = useState([]);
-    
+
     useEffect(() => {
       axios.get("http://localhost:8000/")
           .then(response => {
@@ -28,7 +30,7 @@ const Feed = () => {
 
     return (
         <div className='wrapper'>
-          {console.log()}
+          {/* <LoadingSpinner /> */}
           <div className='fropy'>
             {/* <div className='new-post-link-wrapper'>
               <Link className='new-post-link no-underline' to={'new-post/'}>Create new post</Link>
