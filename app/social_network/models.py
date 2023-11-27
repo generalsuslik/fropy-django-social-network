@@ -1,13 +1,14 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save
 from django.utils.text import slugify
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(null=True, blank=True, upload_to='avatars', default='default/default_av.png')
+    avatar = models.ImageField(null=False, blank=False, upload_to='avatars', default='default/default_av.png')
     date_of_birth = models.DateField(blank=True, null=True)
-    info = models.TextField(blank=True)
+    bio = models.TextField(null=True, blank=True)
     slug = models.SlugField(unique=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -53,10 +54,13 @@ class Post(models.Model):
     image = models.ImageField(upload_to='images/%Y/%m/', null=True, blank=True)
     text = models.TextField(blank=True, null=True)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, blank=True, null=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, null=False, blank=False)
     total_votes = models.IntegerField(default=0)
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ("-created_at",)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
@@ -99,3 +103,12 @@ class UserBookmarking(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+    instance.profile.save()
+
+
+post_save.connect(create_user_profile, sender=User)
