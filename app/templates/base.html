@@ -8,7 +8,37 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
 </head>
 <body>
-    {% include "navbar.html" %}
+    <header>
+        <a class="logo" href="{% url "social_network:index" %}"><h1>Fropy</h1></a>
+        {% if request.user.is_authenticated %}
+        <nav>
+            <ul class="nav__links">
+                <li>
+                    <a href="{% url "social_network:index" %}">Feed</a>
+                </li>
+                <li>
+                    <a href="#">New Post</a>
+                </li>
+                <li>
+                    <a href="#">{{ request.user.username }}</a>
+                </li>
+            </ul>
+        </nav>
+        {% else %}
+            <nav>
+                <ul class="nav__links">
+                    <li>
+                        <a href="{% url "social_network:index" %}">Feed</a>
+                    </li>
+                </ul>
+            </nav>
+            <div>
+                <a class="cta" href="{% url "social_network:login" %}"><button class="button__sign-up">Log In</button></a>
+                <a class="cta" href="{% url "social_network:sign_up" %}"><button class="button__sign-up">Sign Up</button></a>
+            </div>
+        {% endif %}
+    </header>
+    <br />
 
     <div class="content">
         {% block content %}
