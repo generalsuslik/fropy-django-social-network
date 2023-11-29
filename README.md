@@ -4,7 +4,9 @@
 Fropy is an open-source platform that allows users to connect, 
 communicate, deal with their programming problems and simply share news 
 and information. Project's key features are:
-profile management, 
+profile management, posts creating, user comunication.
+
+Our goal is to combine programming and social stuff
 
 ## Installation guideline Linux:
  
