@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-@qip^_(@kmn198ez*n1uz14k6h@k#&u_587!$md!##4f3y&=%$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -66,16 +66,12 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'fropy_db',
-        'USER': 'postgres',
-        'PASSWORD': "admin",
-        'HOST': 'localhost',
-        'PORT': '5432',
-
-        'TEST': {
-            'NAME': 'db_test',
-        }
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"), 
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER", ""),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", ""),
+        "HOST": os.environ.get("SQL_HOST", ""),
+        "PORT": os.environ.get("SQL_PORT", ""),
     }
 }
 
