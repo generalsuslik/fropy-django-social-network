@@ -10,27 +10,39 @@ Our goal is to combine programming and social stuff
 
 ## Installation guideline Linux:
  
-Set up the environment
-### python3 -m venv venv
-### source venv/bin/activate
+We are gonna work with docker
+
+Go to django-project directory
+```shell
+cd app
+```
 <br>
 
-install required dependencies:
-### pip install -r requirements.txt
+Migrate to create a database
+```shell
+docker-compose run web python3 manage.py makemigrations
+docker-compose run web python3 manage.py migrate
+```
 <br>
 
-To create your superuser: 
-### python3 manage.py createsuperuser
-Give him a name password etc.
-<br>
-<hr>
 
-Start your dev server:
-### python3 manage.py runserver
+Create your superuser
+```shell
+docker-compose run web python3 manage.py create superuser
+```
+Then give him a name, password etc. etc.
 <br>
 
-Run tests:
-### python3 manage.py test
+Start your local server:
+```shell
+docker-compose up
+```
+<br>
+
+Close your local server:
+```shell
+docker-compose down
+```
 <br>
 
 
